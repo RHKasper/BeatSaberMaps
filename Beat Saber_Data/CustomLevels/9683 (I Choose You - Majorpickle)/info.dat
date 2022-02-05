@@ -1,0 +1,112 @@
+{
+  "_version": "2.0.0",
+  "_songName": "I Choose You",
+  "_songSubName": "",
+  "_songAuthorName": "Sara Bareilles",
+  "_levelAuthorName": "Majorpickle",
+  "_beatsPerMinute": 154,
+  "_shuffle": 0,
+  "_shufflePeriod": 0.5,
+  "_previewStartTime": 12,
+  "_previewDuration": 10,
+  "_songFilename": "song.egg",
+  "_coverImageFilename": "cover.jpg",
+  "_allDirectionsEnvironmentName": "GlassDesertEnvironment",
+  "_environmentName": "BigMirrorEnvironment",
+  "_songTimeOffset": 0,
+  "_customData": {
+    "_contributors": []
+  },
+  "_difficultyBeatmapSets": [
+    {
+      "_beatmapCharacteristicName": "Standard",
+      "_difficultyBeatmaps": [
+        {
+          "_difficulty": "Expert",
+          "_difficultyRank": 7,
+          "_beatmapFilename": "ExpertStandard.dat",
+          "_noteJumpMovementSpeed": 14,
+          "_noteJumpStartBeatOffset": 0.4000000059604645,
+          "_customData": {
+            "_editorOffset": -15,
+            "_editorOldOffset": -15,
+            "_colorLeft": {
+              "r": 0.9098039,
+              "g": 0.09019608,
+              "b": 0.1137255
+            },
+            "_colorRight": {
+              "r": 0.5019608,
+              "g": 0.5019608,
+              "b": 1
+            },
+            "_envColorLeft": {
+              "r": 0.5019608,
+              "g": 1,
+              "b": 0
+            },
+            "_envColorRight": {
+              "r": 0,
+              "g": 1,
+              "b": 1
+            },
+            "_obstacleColor": {
+              "r": 1,
+              "g": 0.5019608,
+              "b": 1
+            },
+            "_warnings": [],
+            "_information": [],
+            "_suggestions": [],
+            "_requirements": []
+          }
+        }
+      ]
+    },
+    {
+      "_beatmapCharacteristicName": "360Degree",
+      "_difficultyBeatmaps": [
+        {
+          "_difficulty": "Expert",
+          "_difficultyRank": 7,
+          "_beatmapFilename": "Expert360.dat",
+          "_noteJumpMovementSpeed": 14,
+          "_noteJumpStartBeatOffset": 0.4000000059604645,
+          "_customData": {
+            "_editorOffset": -15,
+            "_editorOldOffset": -15,
+            "_colorLeft": {
+              "r": 0.9098039,
+              "g": 0.09019608,
+              "b": 0.1137255
+            },
+            "_colorRight": {
+              "r": 0.5019608,
+              "g": 0.5019608,
+              "b": 1
+            },
+            "_envColorLeft": {
+              "r": 0.5019608,
+              "g": 1,
+              "b": 0
+            },
+            "_envColorRight": {
+              "r": 0,
+              "g": 1,
+              "b": 1
+            },
+            "_obstacleColor": {
+              "r": 1,
+              "g": 0.5019608,
+              "b": 1
+            },
+            "_warnings": [],
+            "_information": [],
+            "_suggestions": [],
+            "_requirements": []
+          }
+        }
+      ]
+    }
+  ]
+}
