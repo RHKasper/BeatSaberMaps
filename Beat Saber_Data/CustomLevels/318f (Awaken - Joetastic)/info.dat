@@ -1,0 +1,54 @@
+{
+  "_version": "2.0.0",
+  "_songName": "Awaken",
+  "_songSubName": "",
+  "_songAuthorName": "Valerie Broussard",
+  "_levelAuthorName": "Joetastic",
+  "_beatsPerMinute": 160,
+  "_songTimeOffset": 0,
+  "_shuffle": 0,
+  "_shufflePeriod": 0.5,
+  "_previewStartTime": 71.85494232177734,
+  "_previewDuration": 10,
+  "_songFilename": "song.egg",
+  "_coverImageFilename": "cover.jpg",
+  "_environmentName": "BigMirrorEnvironment",
+  "_customData": {
+    "_contributors": [],
+    "_customEnvironment": "",
+    "_customEnvironmentHash": ""
+  },
+  "_difficultyBeatmapSets": [
+    {
+      "_beatmapCharacteristicName": "Standard",
+      "_difficultyBeatmaps": [
+        {
+          "_difficulty": "Expert",
+          "_difficultyRank": 7,
+          "_beatmapFilename": "Expert.dat",
+          "_noteJumpMovementSpeed": 15,
+          "_noteJumpStartBeatOffset": 0,
+          "_customData": {
+            "_difficultyLabel": "",
+            "_editorOffset": 40,
+            "_editorOldOffset": 40,
+            "_colorLeft": {
+              "r": 0.1,
+              "g": 0.8,
+              "b": 0.1
+            },
+            "_colorRight": {
+              "r": 0.87,
+              "g": 0.72,
+              "b": 0.52
+            },
+            "_warnings": [],
+            "_information": [],
+            "_suggestions": [],
+            "_requirements": []
+          }
+        }
+      ]
+    }
+  ]
+}

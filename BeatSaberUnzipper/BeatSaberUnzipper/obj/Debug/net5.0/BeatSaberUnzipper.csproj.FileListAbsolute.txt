@@ -1,0 +1,16 @@
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\BeatSaberUnzipper.exe
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\BeatSaberUnzipper.deps.json
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\BeatSaberUnzipper.runtimeconfig.json
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\BeatSaberUnzipper.runtimeconfig.dev.json
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\BeatSaberUnzipper.dll
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\ref\BeatSaberUnzipper.dll
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\BeatSaberUnzipper.pdb
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\BeatSaberUnzipper.csproj.AssemblyReference.cache
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\BeatSaberUnzipper.GeneratedMSBuildEditorConfig.editorconfig
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\BeatSaberUnzipper.AssemblyInfoInputs.cache
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\BeatSaberUnzipper.AssemblyInfo.cs
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\BeatSaberUnzipper.csproj.CoreCompileInputs.cache
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\BeatSaberUnzipper.dll
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\ref\BeatSaberUnzipper.dll
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\BeatSaberUnzipper.pdb
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\BeatSaberUnzipper.genruntimeconfig.cache
