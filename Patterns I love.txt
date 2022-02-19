@@ -1,0 +1,10 @@
+walls mid-pattern that work with the notes to force you to move around the space
+
+Bomb resets for short musical pauses
+circular movement and varying patterns on long stretches of constant tempo
+
+Fitbeat stuff: 
+	rapid side to side movement
+	rapid turns (left/right)
+	Jumps
+	crouch walls
