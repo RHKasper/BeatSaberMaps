@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using Newtonsoft.Json;
 
 namespace BeatSaberUnzipper
 {
@@ -16,7 +17,10 @@ namespace BeatSaberUnzipper
 
             foreach (int playlistId in PlaylistIds)
             {
-                Console.WriteLine(SongDownloader.GetPlaylist(playlistId));
+                string playlistJson = SongDownloader.GetPlaylist(playlistId);
+                PlaylistPage page = JsonConvert.DeserializeObject<PlaylistPage>(playlistJson);
+                Console.WriteLine("Found " + page.maps.Count + " maps");
+                //Console.WriteLine(playlistJson);
             }
             
             Console.WriteLine("Song download complete");
