@@ -8,9 +8,23 @@ namespace BeatSaberUnzipper
     {
         private const string DownloadsFolder = "C:\\Users\\fires\\Downloads";
         private const string BeatsaberMapsFolder = "C:\\repos\\BeatSaberMaps\\Beat Saber_Data\\CustomLevels";
+        private static readonly int[] PlaylistIds = {1918, 2363, 2364};
+
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            foreach (int playlistId in PlaylistIds)
+            {
+                Console.WriteLine(SongDownloader.GetPlaylist(playlistId));
+            }
+            
+            Console.WriteLine("Song download complete");
+            Console.ReadLine();
+
+
+
+
             var files = Directory.GetFiles(DownloadsFolder, "* (*).zip");
 
             foreach (string s in files)
@@ -47,7 +61,6 @@ namespace BeatSaberUnzipper
                 }
                 Console.WriteLine("Finished.");
             }
-
         }
     }
 }
