@@ -1,0 +1,138 @@
+{
+  "_version": "2.0.0",
+  "_songName": "Blow",
+  "_songSubName": "",
+  "_songAuthorName": "Kesha",
+  "_levelAuthorName": "HelenCarnate",
+  "_beatsPerMinute": 120,
+  "_songTimeOffset": 0,
+  "_shuffle": 0,
+  "_shufflePeriod": 0.5,
+  "_previewStartTime": 44,
+  "_previewDuration": 10,
+  "_songFilename": "song.egg",
+  "_coverImageFilename": "cover.jpg",
+  "_environmentName": "BigMirrorEnvironment",
+  "_customData": {
+    "_contributors": [
+      {
+        "_role": "Playtester",
+        "_name": "TranquillizeMe",
+        "_iconPath": "tranq.png"
+      },
+      {
+        "_role": "Playtester",
+        "_name": "Redmagi",
+        "_iconPath": "redmagi.png"
+      },
+      {
+        "_role": "PlayTester",
+        "_name": "CyanSnow",
+        "_iconPath": "cyan.png"
+      },
+      {
+        "_role": "Lighter",
+        "_name": "HelenCarnate",
+        "_iconPath": "helen.png"
+      },
+      {
+        "_role": "Mapper",
+        "_name": "HelenCarnate",
+        "_iconPath": "helen.png"
+      },
+      {
+        "_role": "Playtester",
+        "_name": "Jron",
+        "_iconPath": "jron.jpg"
+      },
+      {
+        "_role": "Playtester",
+        "_name": "TechButterfly",
+        "_iconPath": "tech.png"
+      },
+      {
+        "_role": "Playtester",
+        "_name": "Fruhead",
+        "_iconPath": "fruhead.png"
+      },
+      {
+        "_role": "Playtester",
+        "_name": "Exce",
+        "_iconPath": "exce.png"
+      }
+    ],
+    "_customEnvironment": "",
+    "_customEnvironmentHash": ""
+  },
+  "_difficultyBeatmapSets": [
+    {
+      "_beatmapCharacteristicName": "Standard",
+      "_difficultyBeatmaps": [
+        {
+          "_difficulty": "Easy",
+          "_difficultyRank": 1,
+          "_beatmapFilename": "Easy.dat",
+          "_noteJumpMovementSpeed": 9,
+          "_noteJumpStartBeatOffset": 0,
+          "_customData": {
+            "_difficultyLabel": "",
+            "_editorOffset": -25,
+            "_editorOldOffset": -25,
+            "_warnings": [],
+            "_information": [],
+            "_suggestions": [],
+            "_requirements": []
+          }
+        },
+        {
+          "_difficulty": "Normal",
+          "_difficultyRank": 3,
+          "_beatmapFilename": "Normal.dat",
+          "_noteJumpMovementSpeed": 9,
+          "_noteJumpStartBeatOffset": 0,
+          "_customData": {
+            "_difficultyLabel": "",
+            "_editorOffset": -25,
+            "_editorOldOffset": -25,
+            "_warnings": [],
+            "_information": [],
+            "_suggestions": [],
+            "_requirements": []
+          }
+        },
+        {
+          "_difficulty": "Hard",
+          "_difficultyRank": 5,
+          "_beatmapFilename": "Hard.dat",
+          "_noteJumpMovementSpeed": 12,
+          "_noteJumpStartBeatOffset": 1,
+          "_customData": {
+            "_difficultyLabel": "",
+            "_editorOffset": -25,
+            "_editorOldOffset": -25,
+            "_warnings": [],
+            "_information": [],
+            "_suggestions": [],
+            "_requirements": []
+          }
+        },
+        {
+          "_difficulty": "Expert",
+          "_difficultyRank": 7,
+          "_beatmapFilename": "Expert.dat",
+          "_noteJumpMovementSpeed": 14,
+          "_noteJumpStartBeatOffset": 0,
+          "_customData": {
+            "_difficultyLabel": "",
+            "_editorOffset": -25,
+            "_editorOldOffset": -25,
+            "_warnings": [],
+            "_information": [],
+            "_suggestions": [],
+            "_requirements": []
+          }
+        }
+      ]
+    }
+  ]
+}
