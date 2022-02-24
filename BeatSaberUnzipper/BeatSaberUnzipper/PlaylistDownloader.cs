@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace BeatSaberUnzipper
 {
-    public static class SongDownloader
+    public static class PlaylistDownloader
     {
-        public static string GetPlaylist(int id, int pageNumber = 0)
+        public static BPList DownloadBPList(int id, out string fileContents)
         {
-            string uri = "https://api.beatsaver.com/playlists/id/" + id + "/" + pageNumber;
-            return Get(uri);
+            string uri = "https://api.beatsaver.com/playlists/id/" + id + "/download";
+            fileContents = Get(uri);
+            return JsonConvert.DeserializeObject<BPList>(fileContents);
         }
-        
+
         public static string Get(string uri)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);

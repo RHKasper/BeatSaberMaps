@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace BeatSaberUnzipper
@@ -17,10 +19,12 @@ namespace BeatSaberUnzipper
 
             foreach (int playlistId in PlaylistIds)
             {
-                string playlistJson = SongDownloader.GetPlaylist(playlistId);
-                PlaylistPage page = JsonConvert.DeserializeObject<PlaylistPage>(playlistJson);
-                Console.WriteLine("Found " + page.maps.Count + " maps");
-                //Console.WriteLine(playlistJson);
+                //download playlist file
+                BPList bpList = PlaylistDownloader.DownloadBPList(playlistId, out string fileContents);
+                
+                // save playlist file contents
+                
+
             }
             
             Console.WriteLine("Song download complete");
