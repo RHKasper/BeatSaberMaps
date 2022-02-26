@@ -14,14 +14,24 @@ namespace BeatSaberUnzipper
         private const string DownloadsFolder = "C:\\Users\\fires\\Downloads";
         private const string BeatsaberMapsFolder = "C:\\repos\\BeatSaberMaps\\Beat Saber_Data\\CustomLevels";
         private const string PlaylistsFolderPath = "C:\\repos\\BeatSaberMaps\\Playlists";
-        private static readonly int[] PlaylistIds = {1918, 2363, 2364};
+        private static readonly int[] PlaylistIds = {3210, 2363, 2364, 3209};
         private static int songsLeftToDownload = 0;
 
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            
+            if(Directory.Exists(BeatsaberMapsFolder))
+                Directory.Delete(BeatsaberMapsFolder, true);
+            Directory.CreateDirectory(BeatsaberMapsFolder);
+            
+            if(Directory.Exists(PlaylistsFolderPath))
+                Directory.Delete(PlaylistsFolderPath, true);
+            Directory.CreateDirectory(PlaylistsFolderPath);
 
             songsLeftToDownload = 0;
+
+            HashSet<string> mapIdsDownloaded = new HashSet<string>();
             
             foreach (int playlistId in PlaylistIds)
             {
@@ -32,11 +42,18 @@ namespace BeatSaberUnzipper
                 string path = Path.Combine(PlaylistsFolderPath, bpList.playlistTitle + ".bplist");
                 File.WriteAllText(path, fileContents);
                 Console.WriteLine("Saved Playlist: " + path);
+                Console.WriteLine("Queueing " + bpList.songs.Count + " for download...");
                 
                 // Download songs
                 foreach (Song song in bpList.songs)
                 {
                     MapData mapData = BeatSaverDownloader.GetMapData(song);
+
+                    if (mapIdsDownloaded.Contains(mapData.id))
+                        continue;
+                    else
+                        mapIdsDownloaded.Add(mapData.id);
+                    
                     string zipFileName = mapData.name + " - " + mapData.id + ".zip";
                     foreach (char c in Path.GetInvalidFileNameChars()) 
                         zipFileName = zipFileName.Replace(c, ' ');
