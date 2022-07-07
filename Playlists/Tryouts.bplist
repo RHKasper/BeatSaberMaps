@@ -13,19 +13,9 @@
             "songName": "Enemy (from the series Arcane League of Legends) - Imagine Dragons ft. J.I.D"
         },
         {
-            "key": "1e3d7",
-            "hash": "15667ace5424cbb574f31e94aa678dccd7b1de61",
-            "songName": "Playground (from the series Arcane League of Legends) - Bea Miller"
-        },
-        {
             "key": "200ba",
             "hash": "1ca14612b9b50fe6fd700380c48f18d77da506e4",
             "songName": "[Chroma 2.4] MitiS - Open Window"
-        },
-        {
-            "key": "4f3b",
-            "hash": "14e3837211e7e0a52cf90cdfcc568d51d085c05f",
-            "songName": "Gareth Emery & Standerwick - Saving Light (Notaker Remix) [Feat. HALIENE]"
         },
         {
             "key": "20b93",
@@ -33,13 +23,8 @@
             "songName": "[Chroma] Notaker /  Eric Lumiere - Each Other"
         },
         {
-            "key": "125fb",
-            "hash": "3f5e7d6f8f5554af4935d011e41eacf1316d0fbf",
-            "songName": "Pentatonix - Rather Be"
-        },
-        {
             "key": "1ed01",
-            "hash": "0f0a30bb4139247eb7877eab69f78fe3b047738c",
+            "hash": "ffeec65efc5212b770d6deed6f9ad766914d7635",
             "songName": "All My Love (feat. Conor Maynard) (Sagan Remix) - Cash Cash"
         },
         {
@@ -51,11 +36,6 @@
             "key": "20d18",
             "hash": "6d90001309fe5486fc56d0db854d3406cd43c61d",
             "songName": "[Fitbeat] Tiesto ft. Ava Max - The Motto"
-        },
-        {
-            "key": "21bfc",
-            "hash": "cbecfff5e68e17ae48e2e81e6c24fe4e570ebaa9",
-            "songName": "[Chroma+] Said The Sky - Treading Water (CloudNone Remix)"
         },
         {
             "key": "1a019",
@@ -98,16 +78,6 @@
             "songName": "[Chart-a-thon] LUV U NEED U - Slushii"
         },
         {
-            "key": "20fe1",
-            "hash": "a84021a7b16923fbe4892117cef01cba36744a30",
-            "songName": "Anberlin - Feel Good Drag"
-        },
-        {
-            "key": "16f43",
-            "hash": "70fb457ebc52505876785ad130bb36698b557c47",
-            "songName": "Avicii ft. Aloe Blacc - SOS"
-        },
-        {
             "key": "21e1d",
             "hash": "9915081f34f4efb09e3417435026d6d0989ebf4e",
             "songName": "Waterfall (with RUNN) - RIOT & Far Out"
@@ -121,11 +91,6 @@
             "key": "21a85",
             "hash": "1eb61fdcdde841f4bde12d874fec5fca69ab7ca5",
             "songName": "Dark Horse - Katy Perry"
-        },
-        {
-            "key": "21141",
-            "hash": "f95e002801c19a9f8e3b37fbacac3d9bde5fb54b",
-            "songName": "Tomorrow Tonight - Loote"
         },
         {
             "key": "1e1f7",
@@ -153,9 +118,19 @@
             "songName": "League Of Legend - Get Jinxed [requested]"
         },
         {
-            "key": "1fc08",
-            "hash": "33466bfda7cfdc57928d63e902023199200cc43d",
-            "songName": "Alan Walker - Sing Me To Sleep (Marshmello Remix)"
+            "key": "6bfa",
+            "hash": "ccf70e940a4ec45c70a8f3ae7be18a2ea771461d",
+            "songName": "Approaching Nirvana - Alone"
+        },
+        {
+            "key": "d425",
+            "hash": "abc11328068bed43407a7423b319f32a44c30b7a",
+            "songName": "Brand New Day"
+        },
+        {
+            "key": "23571",
+            "hash": "01d5ae56bef46f6bd1f44d6cfefb5b692ffb42fd",
+            "songName": "A Thousand Miles - Vanessa Carlton"
         }
     ]
 }

@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "kJY/k4psurMjuuXBRW43zasy+UNGJ2fo+98nDJbOJNcyEyW77ELfqg6WYbUHiN17TqBtfoXneCfmEEKXkk5BMg==",
+  "dgSpecHash": "WRDl7H+/2SL3RuPMopB7TAI6Vgra6Xr0JcSbiPl0aTi5QvlGB62hlp7Gwfll0NZEgHPJN011d+/hlxZaWnT22w==",
   "success": true,
   "projectFilePath": "C:\\repos\\BeatSaberMaps\\BeatSaberUnzipper\\BeatSaberUnzipper\\BeatSaberUnzipper.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\fires\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\fires\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\fires\\.nuget\\packages\\microsoft.netcore.app.ref\\5.0.0\\microsoft.netcore.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\fires\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\5.0.0\\microsoft.windowsdesktop.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\fires\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\5.0.0\\microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\fires\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
   ],
   "logs": []
 }

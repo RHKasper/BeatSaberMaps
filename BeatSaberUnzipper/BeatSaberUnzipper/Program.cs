@@ -37,7 +37,12 @@ namespace BeatSaberUnzipper
             {
                 //download playlist file
                 BPList bpList = BeatSaverDownloader.GetBpList(playlistId, out string fileContents);
-                
+                if (bpList == null)
+                {
+                    Console.WriteLine($"playlist {playlistId} could not be downloaded or read");
+                    continue;
+                }
+
                 // save playlist file contents
                 string path = Path.Combine(PlaylistsFolderPath, bpList.playlistTitle + ".bplist");
                 File.WriteAllText(path, fileContents);
@@ -48,16 +53,21 @@ namespace BeatSaberUnzipper
                 foreach (Song song in bpList.songs)
                 {
                     MapData mapData = BeatSaverDownloader.GetMapData(song);
+                    if (mapData == null)
+                    {
+                        Console.WriteLine($"Downloading {song.songName} song data failed");
+                        continue;
+                    }
 
                     if (mapIdsDownloaded.Contains(mapData.id))
                         continue;
                     else
                         mapIdsDownloaded.Add(mapData.id);
-                    
+                
                     string zipFileName = mapData.name + " - " + mapData.id + ".zip";
                     foreach (char c in Path.GetInvalidFileNameChars()) 
                         zipFileName = zipFileName.Replace(c, ' ');
-                    
+                
                     string zipFilePath = Path.Combine(BeatsaberMapsFolder, zipFileName);
                     foreach (char c in Path.GetInvalidPathChars()) 
                         zipFileName = zipFileName.Replace(c+"", "");
@@ -65,7 +75,6 @@ namespace BeatSaberUnzipper
                     songsLeftToDownload++;
                     BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, OnSongFinishedDownloading);
                 }
-                
             }
 
             while (songsLeftToDownload != 0)
