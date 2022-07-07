@@ -16,3 +16,7 @@ C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\Beat
 C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\BeatSaberUnzipper.csproj.CopyComplete
 C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\obj\Debug\net5.0\refint\BeatSaberUnzipper.dll
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\EmbedIO.dll
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\SpotifyAPI.Web.dll
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\SpotifyAPI.Web.Auth.dll
+C:\repos\BeatSaberMaps\BeatSaberUnzipper\BeatSaberUnzipper\bin\Debug\net5.0\Swan.Lite.dll
