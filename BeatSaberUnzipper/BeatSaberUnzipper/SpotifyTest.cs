@@ -9,7 +9,7 @@ namespace BeatSaberUnzipper
 	{ 
 		public static async Task Test()
 		{
-			var spotify = new SpotifyClient("BQBHec-CCCspN_LxH53wNOu9KVPUZ2uIYb06Vu0rkyNtw1vPG4G-jqRvaPDJ5ipSoTcVaial0DCREFi5mHWDnSd7Dxi7jOq8RpQtAHdLD11CnYjRv1BjUCL9wMZvYsbD08HTKm1TAQ61pbCG-HjhRNL7ZeJ2HsdHoWFoDa-UiwitFME");
+			var spotify = new SpotifyClient("BQCakW_XZiFZ_sDdtKmUUEYVmBV53q792cw9Rznbu7KooPooYOoHsvVj-eBwX3d4qYEGNLd8FAq6xG701T2Z77SP0S_hqfj_7dCchcLjj9HXNuUZtgLPtgOhbSiRJtj_vzRjZR7y_Lc3J_Gc01x8rQYq5dloKRMNaxF2hg2HJ5D4pI_nVozcSxoDlNsC");
 			FullTrack testTrack = await spotify.Tracks.Get("0q7oMII7kWTj1ZSX6GT6LU");
 			Console.WriteLine(testTrack.Name + "\n");
 			
@@ -27,7 +27,11 @@ namespace BeatSaberUnzipper
 				foreach (PlaylistTrack<IPlayableItem> track in allTracks)
 				{
 					if (track.Track is FullTrack fullTrack)
+					{
 						message += fullTrack.Name + "\n";
+						BeatSaverDownloader.SearchForSong(fullTrack.Name);
+						return;
+					}
 				}
 				
 				Console.WriteLine(message);
