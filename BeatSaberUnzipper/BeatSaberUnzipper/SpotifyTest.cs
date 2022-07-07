@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SpotifyAPI.Web;
+using Swan;
 
 namespace BeatSaberUnzipper
 {
@@ -20,7 +22,7 @@ namespace BeatSaberUnzipper
 			foreach (var playlist in allPlaylists)
 			{
 				Paging<PlaylistTrack<IPlayableItem>> trackPage = await spotify.Playlists.GetItems(playlist.Id);
-				IList<PlaylistTrack<IPlayableItem>> allTracks = await spotify.PaginateAll(trackPage);
+				IList<PlaylistTrack<IPlayableItem>> allTracks = await spotify.PaginateAll(trackPage);s
 				
 				string message = $"{playlist.Name} ({allTracks.Count} Tracks)\n";
 				
@@ -29,12 +31,13 @@ namespace BeatSaberUnzipper
 					if (track.Track is FullTrack fullTrack)
 					{
 						message += fullTrack.Name + "\n";
-						BeatSaverDownloader.SearchForSong(fullTrack.Name);
-						return;
+						string desiredMapHash = BeatSaverDownloader.SearchForSong(fullTrack.Name, fullTrack.Artists.First().Name);
+						if(desiredMapHash == default)
+							Console.WriteLine($"Search for {fullTrack.Name} by {fullTrack.Artists.Humanize()} failed.");
 					}
 				}
 				
-				Console.WriteLine(message);
+				//Console.WriteLine(message);
 			}
 		}
 	}

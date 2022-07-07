@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using Newtonsoft.Json;
@@ -16,25 +17,41 @@ namespace BeatSaberUnzipper
         /// https://api.beatsaver.com/docs/index.html?url=./swagger.json#/OrderedMap%20%7B%20%22name%22%3A%20%22Search%22%20%7D/get_search_text__page_
         /// </summary>
         /// <returns>Hash of the chosen map, or empty if no viable map is found</returns>
-        public static string SearchForSong(string title)
+        public static string SearchForSong(string title, string artist)
         {
             bool allowChroma = false, allowCinema = false, allowNoodle = false, requireCurated = false;
             
             string uri = "https://api.beatsaver.com/search/text/0?";
 
-            if (!allowChroma)
-                uri += "chroma=false&";
-            if (!allowCinema)
-                uri += "cinema=false&";
-            if (!allowNoodle)
-                uri += "noodle=false&";
+            // if (!allowChroma)
+            //     uri += "chroma=false&";
+            // if (!allowCinema)
+            //     uri += "cinema=false&";
+            // if (!allowNoodle)
+            //     uri += "noodle=false&";
 
             uri += $"q={title}";
-            uri += "&sortOrder=Rating";
-            string fileContents = Get(uri);
+            uri += "&sortOrder=Relevance";
 
-            Console.WriteLine($"{title}:\n\n{fileContents}");
-            return fileContents;
+            try
+            {
+                string fileContents = Get(uri);
+
+                //Console.WriteLine($"{title}:\n\n{fileContents}");
+                SearchQuery searchQuery = JsonConvert.DeserializeObject<SearchQuery>(fileContents);
+
+                Console.WriteLine($"{title} {artist}\n");
+                var docs  = searchQuery.docs.Where(d => d.name.Contains(title) && d.name.Contains(artist));
+                foreach (Doc doc in docs)
+                    Console.WriteLine($"{doc.name}: {doc.versions.First().previewURL}");
+
+                Console.WriteLine("==============================================================\n\n");
+                return searchQuery.docs.First().versions.First().hash;
+            }
+            catch
+            {
+                return "";
+            }
         }
         
         public static MapData GetMapData(Song song) => GetMapData(song.hash);
