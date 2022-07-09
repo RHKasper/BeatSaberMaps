@@ -6,8 +6,8 @@ namespace BeatSaberUnzipper
 {
 	public class MapRequestManager
 	{
-		public int songsLeftToDownload { get; private set; }= 0;
-		private HashSet<string> mapsRequested = new HashSet<string>();
+		public int songsLeftToDownload { get; private set; }
+		private HashSet<string> mapsRequested = new();
 
 		public MapRequestManager()
 		{
@@ -19,7 +19,7 @@ namespace BeatSaberUnzipper
 
 		/// <summary>
 		/// Checks the mapCache to see if the desired map is already present. If it is, do nothing. Otherwise, trigger
-		/// a download request for the given song and call <see cref="OnDownloadFinished"/> when it completes.
+		/// a download request for the given song and call <see cref="OnMapDownloadFinished"/> when it completes.
 		/// </summary>
 		/// <param name="mapData">The map being requested</param>
 		public void RequestMapAsync(MapData mapData)
@@ -51,9 +51,13 @@ namespace BeatSaberUnzipper
 			mapsRequested.Add(mapData.id);
 			Console.WriteLine($"Downloading {mapData.name}");
 			songsLeftToDownload++;
-			BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, OnDownloadFinished);
+			BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, OnMapDownloadFinished);
 		}
 
+		/// <summary>
+		/// Download playlist file synchronously
+		/// </summary>
+		/// <returns></returns>
 		public BPList RequestPlaylist(int playlistId, out string filePath)
 		{
 			//download playlist file
@@ -71,7 +75,7 @@ namespace BeatSaberUnzipper
 			return bpList;
 		}
 
-		private void OnDownloadFinished(string zipFilePath)
+		private void OnMapDownloadFinished(string zipFilePath)
 		{
 			FileManager.UnzipFile(zipFilePath, out string unzipDir);
 			songsLeftToDownload--;
