@@ -13,18 +13,19 @@ namespace BeatSaberUnzipper
 {
     class Program
     {
-        private static readonly int[] PlaylistIds = { 3210, 2363, 2364, 3209};
+        private static readonly int[] PlaylistIds = { };//{ 3210, 2363, 2364, 3209};
+        private static readonly string[] SpotifyPlaylistUrls =
+        {
+            "https://open.spotify.com/playlist/13sMTwbmntrlaNZhOvUnJ3?si=7a19414a763a49b7",
+            "https://open.spotify.com/playlist/7ms1M4Jp5PUpr1R8FQnTTd?si=d7d22913e979489c"
+        };
         static async Task Main(string[] args)
         {
-            // Console.WriteLine("Hello World!");
-            // Console.WriteLine("Running Spotify Test");
-            // await SpotifyTest.Test();
-            // Console.WriteLine("Spotify Test Finished");
+            Console.WriteLine("Hello World!");
+            Console.WriteLine("Running Spotify Test");
+            await SpotifyTest.GenerateBeatSaberPlaylists(SpotifyPlaylistUrls);
+            Console.WriteLine("Spotify Test Finished");
 
-            FileManager.ClearOutputDirectories();
-            
-            int mapDataCountRequested = 0;
-            int mapDataCountReceived = 0;
             MapRequestManager mapRequestManager = new MapRequestManager();
 
             foreach (int playlistId in PlaylistIds)

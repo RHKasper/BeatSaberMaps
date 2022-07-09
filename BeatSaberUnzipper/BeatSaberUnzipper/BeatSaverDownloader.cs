@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using Newtonsoft.Json;
+using SpotifyAPI.Web;
 
 namespace BeatSaberUnzipper
 {
@@ -17,8 +18,11 @@ namespace BeatSaberUnzipper
         /// https://api.beatsaver.com/docs/index.html?url=./swagger.json#/OrderedMap%20%7B%20%22name%22%3A%20%22Search%22%20%7D/get_search_text__page_
         /// </summary>
         /// <returns>Hash of the chosen map, or empty if no viable map is found</returns>
-        public static Doc SearchForSong(string title, string artist)
+        public static Doc SearchForTrack(FullTrack fullTrack)
         {
+            string title = fullTrack.Name;
+            string firstArtist = fullTrack.Artists.First().Name;
+            
             bool allowChroma = false, allowCinema = false, allowNoodle = false, requireCurated = false;
             
             string uri = "https://api.beatsaver.com/search/text/0?";
@@ -37,7 +41,7 @@ namespace BeatSaberUnzipper
             {
                 string fileContents = Get(uri);
                 SearchQuery searchQuery = JsonConvert.DeserializeObject<SearchQuery>(fileContents);
-                var selectedMapDoc = GetBestMap(title, artist, searchQuery);
+                var selectedMapDoc = GetBestMap(title, firstArtist, searchQuery);
                 return selectedMapDoc;
             }
             catch
