@@ -22,10 +22,12 @@ namespace BeatSaberUnzipper
             // Console.WriteLine("Spotify Test Finished");
 
             FileManager.ClearOutputDirectories();
-
+            
+            int mapDataCountRequested = 0;
+            int mapDataCountReceived = 0;
             MapRequestManager mapRequestManager = new MapRequestManager();
             HashSet<string> mapIdsDownloaded = new HashSet<string>();
-            
+
             foreach (int playlistId in PlaylistIds)
             {
                 // Download Playlist
@@ -37,22 +39,8 @@ namespace BeatSaberUnzipper
                 Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
 
                 // Download map data and trigger async map file downloads
-                foreach (Song song in bpList.songs)
-                {
-                    MapData mapData = BeatSaverDownloader.GetMapData(song);
-                    if (mapData == null)
-                    {
-                        Console.WriteLine($"Downloading {song.songName} map data failed");
-                        continue;
-                    }
-            
-                    if (mapIdsDownloaded.Contains(mapData.id))
-                        continue;
-                    else
-                        mapIdsDownloaded.Add(mapData.id);
-                    
-                    mapRequestManager.RequestMapAsync(mapData);
-                }
+                foreach (Song song in bpList.songs) 
+                    mapRequestManager.RequestMapDataAsync(song);
             }
             
             while (mapRequestManager.songsLeftToDownload > 0)

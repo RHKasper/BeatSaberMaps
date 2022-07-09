@@ -6,8 +6,11 @@ namespace BeatSaberUnzipper
 {
 	public class MapRequestManager
 	{
+		public int mapDataLeftToDownload { get; private set; }
 		public int songsLeftToDownload { get; private set; }
-		private HashSet<string> mapsRequested = new();
+		
+		private HashSet<string> zipFilesRequested = new();
+		private HashSet<string> mapDataRequested = new();
 
 		public MapRequestManager()
 		{
@@ -15,6 +18,25 @@ namespace BeatSaberUnzipper
 				Directory.CreateDirectory(FileManager.MapCachePath);
 			if (Directory.Exists(FileManager.PlaylistsCachePath) == false)
 				Directory.CreateDirectory(FileManager.PlaylistsCachePath);
+		}
+
+		public void RequestMapDataAsync(Song song)
+		{
+			if (mapDataRequested.Contains(song.hash))
+			{
+				Console.WriteLine($"Skipping Map Data download for {song.songName} since it has been requested recently");
+				return;
+			}
+
+			mapDataLeftToDownload++;
+			Console.WriteLine($"Downloading map data for {song.songName}");
+			mapDataRequested.Add(song.hash);
+			string uri = "https://api.beatsaver.com/maps/hash/" + song.hash;
+			BeatSaverDownloader.GetMapData(uri,data =>
+			{
+				mapDataLeftToDownload--;
+				RequestMapAsync(data);
+			});
 		}
 
 		/// <summary>
@@ -28,7 +50,7 @@ namespace BeatSaberUnzipper
 			string zipFilePath = FileManager.GetZipFilePath(mapData);
 
 			// Don't bother downloading if we already have this map, or have already requested it.
-			if (mapsRequested.Contains(mapData.id))
+			if (zipFilesRequested.Contains(mapData.id))
 			{
 				Console.WriteLine($"Already received a map request for : {mapData.name}");
 				return;
@@ -48,10 +70,14 @@ namespace BeatSaberUnzipper
 			}
 			
 			// Track new request and trigger .zip file download
-			mapsRequested.Add(mapData.id);
+			zipFilesRequested.Add(mapData.id);
 			Console.WriteLine($"Downloading {mapData.name}");
 			songsLeftToDownload++;
-			BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, OnMapDownloadFinished);
+			BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, s =>
+			{
+				songsLeftToDownload--;
+				FileManager.UnzipFile(zipFilePath, out _);
+			});
 		}
 
 		/// <summary>
@@ -73,12 +99,6 @@ namespace BeatSaberUnzipper
 			filePath = FileManager.GetPlaylistFilePath(bpList);
 			File.WriteAllText(filePath, fileContents);
 			return bpList;
-		}
-
-		private void OnMapDownloadFinished(string zipFilePath)
-		{
-			FileManager.UnzipFile(zipFilePath, out string unzipDir);
-			songsLeftToDownload--;
 		}
 	}
 }
