@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -42,7 +43,9 @@ namespace BeatSaberUnzipper
                     mapRequestManager.RequestMapDataAsync(song);
             }
             
-            while (mapRequestManager.mapDataLeftToDownload > 0 || mapRequestManager.zipFilesLeftToDownload > 0)
+            Stopwatch timer = Stopwatch.StartNew();
+
+            while ((timer.Elapsed.TotalSeconds < 10 && mapRequestManager.mapDataLeftToDownload >0 ) || mapRequestManager.zipFilesLeftToDownload > 0)
             {
                 Console.WriteLine($"Waiting for {mapRequestManager.mapDataLeftToDownload} map data requests and {mapRequestManager.zipFilesLeftToDownload} zip file requests");
                 Thread.Sleep(750);

@@ -36,7 +36,7 @@ namespace BeatSaberUnzipper
 			}
 
 			// Throttle request rate so server doesn't get mad
-			Thread.Sleep(250);
+			Thread.Sleep(150);
 			if (mapDataLeftToDownload >= maxMapDataRequests)
 			{
 				EnqueueMapDataRequest(song);
