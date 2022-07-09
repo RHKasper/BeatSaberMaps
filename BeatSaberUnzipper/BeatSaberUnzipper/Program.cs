@@ -26,26 +26,20 @@ namespace BeatSaberUnzipper
 
             songsLeftToDownload = 0;
 
-            MapRequestManager mapRequestManager = new MapRequestManager(FileManager.MapCachePath);
+            MapRequestManager mapRequestManager = new MapRequestManager();
             HashSet<string> mapIdsDownloaded = new HashSet<string>();
             
             foreach (int playlistId in PlaylistIds)
             {
-                //download playlist file
-                BPList bpList = BeatSaverDownloader.GetBpList(playlistId, out string fileContents);
-                if (bpList == null)
-                {
-                    Console.WriteLine($"playlist {playlistId} could not be downloaded or read");
+                // Download Playlist
+                BPList bpList = mapRequestManager.RequestPlaylist(playlistId, out string playlistPath);
+                if(bpList == null)
                     continue;
-                }
-            
-                // save playlist file contents
-                string path = Path.Combine(FileManager.PlaylistsFolderPath, bpList.playlistTitle + ".bplist");
-                File.WriteAllText(path, fileContents);
-                Console.WriteLine("Saved Playlist: " + path);
-                Console.WriteLine("Queueing " + bpList.songs.Count + " for download...");
                 
-                // Download songs
+                Console.WriteLine("Saved Playlist: " + playlistPath);
+                Console.WriteLine("Queueing " + bpList.songs.Count + " for download...");
+
+                // Download map data and trigger async map file downloads
                 foreach (Song song in bpList.songs)
                 {
                     MapData mapData = BeatSaverDownloader.GetMapData(song);

@@ -7,6 +7,7 @@ namespace BeatSaberUnzipper
 	public static class FileManager
 	{
 		public const string MapCachePath = "C:\\repos\\BeatSaberMaps\\Cache\\MapCache";
+		public const string PlaylistsCachePath = "C:\\repos\\BeatSaberMaps\\Cache\\Playlists";
 		public const string BeatsaberMapsFolder = "C:\\repos\\BeatSaberMaps\\Beat Saber_Data\\CustomLevels";
 		public const string PlaylistsFolderPath = "C:\\repos\\BeatSaberMaps\\Playlists";
 		
@@ -34,13 +35,13 @@ namespace BeatSaberUnzipper
 
 		public static string GetMapDirectory(string zipFilePath)
 		{
-			string targetDir = Path.Combine(BeatsaberMapsFolder, Path.GetFileNameWithoutExtension(zipFilePath));
+			string targetDir = Path.Combine(MapCachePath, Path.GetFileNameWithoutExtension(zipFilePath));
 			return targetDir;
 		}
 
 		public static string GetZipFilePath(string zipFileName)
 		{
-			string zipFilePath = Path.Combine(BeatsaberMapsFolder, zipFileName);
+			string zipFilePath = Path.Combine(MapCachePath, zipFileName);
 			foreach (char c in Path.GetInvalidPathChars())
 				zipFileName = zipFileName.Replace(c + "", "");
 			return zipFilePath;
@@ -56,6 +57,8 @@ namespace BeatSaberUnzipper
 			return zipFileName;
 		}
 		
+		public static string GetPlaylistFilePath(BPList bpList) => Path.Combine(PlaylistsCachePath, bpList.playlistTitle + ".bplist");
+
 		public static void ClearOutputDirectories()
 		{
 			if (Directory.Exists(BeatsaberMapsFolder))

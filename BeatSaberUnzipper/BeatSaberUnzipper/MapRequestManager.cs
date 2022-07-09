@@ -5,11 +5,12 @@ namespace BeatSaberUnzipper
 {
 	public class MapRequestManager
 	{
-		private readonly string _mapCachePath;
-
-		public MapRequestManager(string mapCachePath)
+		public MapRequestManager()
 		{
-			_mapCachePath = mapCachePath;
+			if (Directory.Exists(FileManager.MapCachePath) == false)
+				Directory.CreateDirectory(FileManager.MapCachePath);
+			if (Directory.Exists(FileManager.PlaylistsCachePath) == false)
+				Directory.CreateDirectory(FileManager.PlaylistsCachePath);
 		}
 
 		/// <summary>
@@ -27,6 +28,23 @@ namespace BeatSaberUnzipper
 				string zipFilePath = FileManager.GetZipFilePath(mapData);
 				BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, OnRequestComplete);
 			}
+		}
+
+		public BPList RequestPlaylist(int playlistId, out string filePath)
+		{
+			//download playlist file
+			BPList bpList = BeatSaverDownloader.GetBpList(playlistId, out string fileContents);
+			if (bpList == null)
+			{
+				Console.WriteLine($"playlist {playlistId} could not be downloaded or read");
+				filePath = default;
+				return null;
+			}
+            
+			// save playlist file contents
+			filePath = FileManager.GetPlaylistFilePath(bpList);
+			File.WriteAllText(filePath, fileContents);
+			return bpList;
 		}
 	}
 }
