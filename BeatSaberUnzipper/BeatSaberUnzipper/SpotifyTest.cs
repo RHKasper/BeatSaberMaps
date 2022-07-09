@@ -8,7 +8,8 @@ using Swan;
 namespace BeatSaberUnzipper
 {
 	class SpotifyTest
-	{ 
+	{
+		private const string NullLabel = "NULL";
 		public static async Task Test()
 		{
 			var config = SpotifyClientConfig.CreateDefault();
@@ -26,25 +27,24 @@ namespace BeatSaberUnzipper
 			
 			foreach (var playlist in allPlaylists)
 			{
-				Console.WriteLine("Playlist: " + playlist.Name);
+				Console.WriteLine( $"{playlist.Name}");
 				
 				Paging<PlaylistTrack<IPlayableItem>> trackPage = await spotify.Playlists.GetItems(playlist.Id);
 				IList<PlaylistTrack<IPlayableItem>> allTracks = await spotify.PaginateAll(trackPage);
 				
-				string message = $"{playlist.Name} ({allTracks.Count} Tracks)\n";
+				Console.WriteLine($"{allTracks.Count} tracks");
+				
 				
 				foreach (PlaylistTrack<IPlayableItem> track in allTracks)
 				{
 					if (track.Track is FullTrack fullTrack)
 					{
-						message += fullTrack.Name + "\n";
-						string desiredMapHash = BeatSaverDownloader.SearchForSong(fullTrack.Name, fullTrack.Artists.First().Name);
-						if(desiredMapHash == default)
-							Console.WriteLine($"Search for {fullTrack.Name} by {fullTrack.Artists.Humanize()} failed.");
+						var desiredMap = BeatSaverDownloader.SearchForSong(fullTrack.Name, fullTrack.Artists.First().Name);
+						Console.WriteLine($"{fullTrack.Name} (by {fullTrack.Artists[0].Name}) ========== {(desiredMap == default ? NullLabel : desiredMap.name)}");
 					}
 				}
-				
-				Console.WriteLine(message);
+
+				Console.WriteLine();
 			}
 		}
 	}

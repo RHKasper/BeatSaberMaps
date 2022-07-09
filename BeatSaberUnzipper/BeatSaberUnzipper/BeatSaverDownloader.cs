@@ -17,7 +17,7 @@ namespace BeatSaberUnzipper
         /// https://api.beatsaver.com/docs/index.html?url=./swagger.json#/OrderedMap%20%7B%20%22name%22%3A%20%22Search%22%20%7D/get_search_text__page_
         /// </summary>
         /// <returns>Hash of the chosen map, or empty if no viable map is found</returns>
-        public static string SearchForSong(string title, string artist)
+        public static Doc SearchForSong(string title, string artist)
         {
             bool allowChroma = false, allowCinema = false, allowNoodle = false, requireCurated = false;
             
@@ -36,22 +36,19 @@ namespace BeatSaberUnzipper
             try
             {
                 string fileContents = Get(uri);
-
-                //Console.WriteLine($"{title}:\n\n{fileContents}");
                 SearchQuery searchQuery = JsonConvert.DeserializeObject<SearchQuery>(fileContents);
-
-                Console.WriteLine($"{title} {artist}\n");
-                var docs  = searchQuery.docs.Where(d => d.name.Contains(title) && d.name.Contains(artist));
-                foreach (Doc doc in docs)
-                    Console.WriteLine($"{doc.name}: {doc.versions.First().previewURL}");
-
-                Console.WriteLine("==============================================================\n\n");
-                return searchQuery.docs.First().versions.First().hash;
+                var selectedMapDoc = GetBestMap(title, artist, searchQuery);
+                return selectedMapDoc;
             }
             catch
             {
-                return "";
+                return null;
             }
+        }
+
+        public static Doc GetBestMap(string title, string artist, SearchQuery searchQuery)
+        {
+            return searchQuery.docs.First();
         }
         
         public static MapData GetMapData(Song song) => GetMapData(song.hash);
