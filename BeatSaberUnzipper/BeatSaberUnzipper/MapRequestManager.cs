@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace BeatSaberUnzipper
 {
 	public class MapRequestManager
 	{
 		public int mapDataLeftToDownload { get; private set; }
-		public int songsLeftToDownload { get; private set; }
+		public int zipFilesLeftToDownload { get; private set; }
 		
-		private HashSet<string> zipFilesRequested = new();
 		private HashSet<string> mapDataRequested = new();
+		private HashSet<string> zipFilesRequested = new();
+		
+		private Queue<Song> mapDataRequestQueue = new();
+
+		private int maxMapDataRequests = 10;
+
 
 		public MapRequestManager()
 		{
@@ -22,12 +28,22 @@ namespace BeatSaberUnzipper
 
 		public void RequestMapDataAsync(Song song)
 		{
+			// Skip MapData that's already been requested
 			if (mapDataRequested.Contains(song.hash))
 			{
 				Console.WriteLine($"Skipping Map Data download for {song.songName} since it has been requested recently");
 				return;
 			}
 
+			// Throttle request rate so server doesn't get mad
+			Thread.Sleep(250);
+			if (mapDataLeftToDownload >= maxMapDataRequests)
+			{
+				EnqueueMapDataRequest(song);
+				return;
+			}
+			
+			// Request MapData
 			mapDataLeftToDownload++;
 			Console.WriteLine($"Downloading map data for {song.songName}");
 			mapDataRequested.Add(song.hash);
@@ -69,13 +85,14 @@ namespace BeatSaberUnzipper
 				File.Delete(zipFilePath);
 			}
 			
+			
 			// Track new request and trigger .zip file download
 			zipFilesRequested.Add(mapData.id);
-			Console.WriteLine($"Downloading {mapData.name}");
-			songsLeftToDownload++;
+			Console.WriteLine($"Downloading .zip file for {mapData.name}");
+			zipFilesLeftToDownload++;
 			BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, s =>
 			{
-				songsLeftToDownload--;
+				zipFilesLeftToDownload--;
 				FileManager.UnzipFile(zipFilePath, out _);
 			});
 		}
@@ -100,5 +117,7 @@ namespace BeatSaberUnzipper
 			File.WriteAllText(filePath, fileContents);
 			return bpList;
 		}
+
+		private void EnqueueMapDataRequest(Song song) => mapDataRequestQueue.Enqueue(song);
 	}
 }

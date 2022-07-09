@@ -82,7 +82,7 @@ namespace BeatSaberUnzipper
             webClient.DownloadFileCompleted += (_, _) => onDownloadFinished(outFilePath);
         }
 
-        public static void GetMapData(string uri, Action<MapData> mapData)
+        public static void GetMapData(string uri, Action<MapData> callback)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -94,7 +94,8 @@ namespace BeatSaberUnzipper
             
             webClient.DownloadDataCompleted += (_, args) =>
             {
-                JsonConvert.DeserializeObject<MapData>(System.Text.Encoding.Default.GetString(args.Result));
+                MapData mapData =  JsonConvert.DeserializeObject<MapData>(System.Text.Encoding.Default.GetString(args.Result));
+                callback.Invoke(mapData);
             };
         }
         

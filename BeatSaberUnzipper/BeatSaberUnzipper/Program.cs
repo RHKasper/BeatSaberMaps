@@ -26,7 +26,6 @@ namespace BeatSaberUnzipper
             int mapDataCountRequested = 0;
             int mapDataCountReceived = 0;
             MapRequestManager mapRequestManager = new MapRequestManager();
-            HashSet<string> mapIdsDownloaded = new HashSet<string>();
 
             foreach (int playlistId in PlaylistIds)
             {
@@ -43,9 +42,9 @@ namespace BeatSaberUnzipper
                     mapRequestManager.RequestMapDataAsync(song);
             }
             
-            while (mapRequestManager.songsLeftToDownload > 0)
+            while (mapRequestManager.mapDataLeftToDownload > 0 || mapRequestManager.zipFilesLeftToDownload > 0)
             {
-                Console.WriteLine("Waiting for " + mapRequestManager.songsLeftToDownload + " songs to download");
+                Console.WriteLine($"Waiting for {mapRequestManager.mapDataLeftToDownload} map data requests and {mapRequestManager.zipFilesLeftToDownload} zip file requests");
                 Thread.Sleep(750);
             }
             
