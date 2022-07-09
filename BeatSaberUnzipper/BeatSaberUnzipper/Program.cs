@@ -13,8 +13,7 @@ namespace BeatSaberUnzipper
 {
     class Program
     {
-        private static readonly int[] PlaylistIds = {3210, 2363, 2364, 3209};
-
+        private static readonly int[] PlaylistIds = { 3210 };//, 2363, 2364, 3209};
         static async Task Main(string[] args)
         {
             // Console.WriteLine("Hello World!");
@@ -51,7 +50,12 @@ namespace BeatSaberUnzipper
                 Thread.Sleep(750);
             }
             
-            Console.WriteLine("Song and playlist download complete");
+            Console.WriteLine("Song and playlist download complete\n");
+            
+            Console.WriteLine("Generating output folders from caches");
+            FileManager.ClearOutputDirectories();
+            FileManager.ExportPlaylists();
+            FileManager.ExportMaps(mapRequestManager.mapFoldersToOutput);
         }
     }
 }

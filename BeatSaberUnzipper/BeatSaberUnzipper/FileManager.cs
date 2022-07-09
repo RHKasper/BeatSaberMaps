@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 
 namespace BeatSaberUnzipper
 {
@@ -8,8 +11,8 @@ namespace BeatSaberUnzipper
 	{
 		public const string MapCachePath = "C:\\repos\\BeatSaberMaps\\Cache\\MapCache";
 		public const string PlaylistsCachePath = "C:\\repos\\BeatSaberMaps\\Cache\\Playlists";
-		public const string BeatsaberMapsFolder = "C:\\repos\\BeatSaberMaps\\Beat Saber_Data\\CustomLevels";
-		public const string PlaylistsFolderPath = "C:\\repos\\BeatSaberMaps\\Playlists";
+		public const string MapsOutputFolderPath = "C:\\repos\\BeatSaberMaps\\output\\CustomLevels";
+		public const string PlaylistsOutputFolderPath = "C:\\repos\\BeatSaberMaps\\output\\Playlists";
 		
 		public static void UnzipFile(string zipFilePath, out string unzipDir)
 		{
@@ -60,13 +63,60 @@ namespace BeatSaberUnzipper
 
 		public static void ClearOutputDirectories()
 		{
-			if (Directory.Exists(BeatsaberMapsFolder))
-				Directory.Delete(BeatsaberMapsFolder, true);
-			Directory.CreateDirectory(BeatsaberMapsFolder);
+			if (Directory.Exists(MapsOutputFolderPath))
+				Directory.Delete(MapsOutputFolderPath, true);
+			Directory.CreateDirectory(MapsOutputFolderPath);
 
-			if (Directory.Exists(PlaylistsFolderPath))
-				Directory.Delete(PlaylistsFolderPath, true);
-			Directory.CreateDirectory(PlaylistsFolderPath);
+			if (Directory.Exists(PlaylistsOutputFolderPath))
+				Directory.Delete(PlaylistsOutputFolderPath, true);
+			Directory.CreateDirectory(PlaylistsOutputFolderPath);
+		}
+
+		public static void ExportPlaylists() => CopyDirectory(PlaylistsCachePath, PlaylistsOutputFolderPath);
+
+		public static void ExportMaps(IEnumerable<string> mapFolderPaths)
+		{
+			foreach (string mapFolderPath in mapFolderPaths)
+			{
+				string filename = Path.GetFileName(mapFolderPath);
+				string target = Path.Combine(MapsOutputFolderPath, filename);
+				Console.WriteLine($"Copying {mapFolderPath} to {target}");
+				CopyDirectory(mapFolderPath, target);
+			}
+		}
+
+		static void CopyDirectory(string sourceDir, string destinationDir, bool recursive = true)
+		{
+			// Get information about the source directory
+			var dir = new DirectoryInfo(sourceDir);
+
+			// Check if the source directory exists
+			if (!dir.Exists)
+				throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+			// Cache directories before we start copying
+			DirectoryInfo[] dirs = dir.GetDirectories();
+
+			// Create the destination directory
+			Directory.CreateDirectory(destinationDir);
+
+			// Get the files in the source directory and copy to the destination directory
+			foreach (FileInfo file in dir.GetFiles())
+			{
+				string targetFilePath = Path.Combine(destinationDir, file.Name);
+				file.CopyTo(targetFilePath);
+			}
+
+			// If recursive and copying subdirectories, recursively call this method
+			if (recursive)
+			{
+				foreach (DirectoryInfo subDir in dirs)
+				{
+					string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
+					CopyDirectory(subDir.FullName, newDestinationDir, true);
+				}
+			}
+			
 		}
 	}
 }

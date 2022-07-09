@@ -9,10 +9,11 @@ namespace BeatSaberUnzipper
 	{
 		public int mapDataLeftToDownload { get; private set; }
 		public int zipFilesLeftToDownload { get; private set; }
+		public HashSet<string> mapFoldersToOutput = new();
 		
 		private HashSet<string> mapDataRequested = new();
 		private HashSet<string> zipFilesRequested = new();
-		
+
 		private Queue<Song> mapDataRequestQueue = new();
 
 		private int maxMapDataRequests = 10;
@@ -64,6 +65,7 @@ namespace BeatSaberUnzipper
 		{
 			string mapDirectory = FileManager.GetMapDirectory(mapData);
 			string zipFilePath = FileManager.GetZipFilePath(mapData);
+			mapFoldersToOutput.Add(FileManager.GetMapDirectory(zipFilePath));
 
 			// Don't bother downloading if we already have this map, or have already requested it.
 			if (zipFilesRequested.Contains(mapData.id))
@@ -93,7 +95,7 @@ namespace BeatSaberUnzipper
 			BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, s =>
 			{
 				zipFilesLeftToDownload--;
-				FileManager.UnzipFile(zipFilePath, out _);
+				FileManager.UnzipFile(zipFilePath, out string unzipDir);
 			});
 		}
 
