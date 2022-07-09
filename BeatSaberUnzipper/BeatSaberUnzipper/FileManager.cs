@@ -11,23 +11,22 @@ namespace BeatSaberUnzipper
 		public const string BeatsaberMapsFolder = "C:\\repos\\BeatSaberMaps\\Beat Saber_Data\\CustomLevels";
 		public const string PlaylistsFolderPath = "C:\\repos\\BeatSaberMaps\\Playlists";
 		
-		public static void UnzipFile(string zipFilePath, bool deleteZipFile = true)
+		public static void UnzipFile(string zipFilePath, out string unzipDir)
 		{
-			var targetDir = GetMapDirectory(zipFilePath);
+			unzipDir = GetMapDirectory(zipFilePath);
 
 			try
 			{
-				if(Directory.Exists(targetDir)) 
-					Directory.Delete(targetDir, true);
-				ZipFile.ExtractToDirectory(zipFilePath, targetDir);
+				if(Directory.Exists(unzipDir)) 
+					Directory.Delete(unzipDir, true);
+				ZipFile.ExtractToDirectory(zipFilePath, unzipDir);
 			}
 			catch(Exception e)
 			{
 				Console.WriteLine("Failed to extract " + zipFilePath);
 				Console.WriteLine(e);
 			}
-			if(deleteZipFile)
-				File.Delete(zipFilePath);
+			File.Delete(zipFilePath);
 		}
 
 

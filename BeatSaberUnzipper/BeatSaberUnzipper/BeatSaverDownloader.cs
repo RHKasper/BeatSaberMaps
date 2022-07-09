@@ -82,6 +82,12 @@ namespace BeatSaberUnzipper
             }
         }
 
+        /// <summary>
+        /// download a zip file from <see cref="uri"/> to <see cref="outFilePath"/>.
+        /// </summary>
+        /// <param name="uri">Where the file is downloaded from</param>
+        /// <param name="outFilePath">Where the file is saved on the local drive</param>
+        /// <param name="onDownloadFinished">Action gets passed outFilePath (.zip file)</param>
         public static void DownloadZipFile(string uri, string outFilePath, Action<string> onDownloadFinished)
         {
             WebClient webClient = new WebClient();

@@ -13,7 +13,6 @@ namespace BeatSaberUnzipper
     class Program
     {
         private static readonly int[] PlaylistIds = {3210, 2363, 2364, 3209};
-        private static int songsLeftToDownload = 0;
 
         static async Task Main(string[] args)
         {
@@ -23,8 +22,6 @@ namespace BeatSaberUnzipper
             // Console.WriteLine("Spotify Test Finished");
 
             FileManager.ClearOutputDirectories();
-
-            songsLeftToDownload = 0;
 
             MapRequestManager mapRequestManager = new MapRequestManager();
             HashSet<string> mapIdsDownloaded = new HashSet<string>();
@@ -53,25 +50,18 @@ namespace BeatSaberUnzipper
                         continue;
                     else
                         mapIdsDownloaded.Add(mapData.id);
-
-                    songsLeftToDownload++;
-                    mapRequestManager.RequestMapAsync(mapData, OnSongFinishedDownloading);
+                    
+                    mapRequestManager.RequestMapAsync(mapData, s => Console.WriteLine($"Downloaded and unzipped {s}"));
                 }
             }
             
-            while (songsLeftToDownload != 0)
+            while (mapRequestManager.songsLeftToDownload > 0)
             {
-                Console.WriteLine("Waiting for " + songsLeftToDownload + " songs to download");
+                Console.WriteLine("Waiting for " + mapRequestManager.songsLeftToDownload + " songs to download");
                 Thread.Sleep(750);
             }
             
             Console.WriteLine("Song and playlist download complete");
-        }
-
-        private static void OnSongFinishedDownloading(string path)
-        {
-            FileManager.UnzipFile(path);
-            songsLeftToDownload--;
         }
     }
 }
