@@ -51,7 +51,7 @@ namespace BeatSaberUnzipper
                     else
                         mapIdsDownloaded.Add(mapData.id);
                     
-                    mapRequestManager.RequestMapAsync(mapData, s => Console.WriteLine($"Downloaded and unzipped {s}"));
+                    mapRequestManager.RequestMapAsync(mapData);
                 }
             }
             

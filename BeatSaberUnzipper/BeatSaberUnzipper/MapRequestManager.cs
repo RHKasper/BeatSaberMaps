@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace BeatSaberUnzipper
@@ -6,7 +7,8 @@ namespace BeatSaberUnzipper
 	public class MapRequestManager
 	{
 		public int songsLeftToDownload { get; private set; }= 0;
-		
+		private HashSet<string> mapsRequested = new HashSet<string>();
+
 		public MapRequestManager()
 		{
 			if (Directory.Exists(FileManager.MapCachePath) == false)
@@ -16,24 +18,40 @@ namespace BeatSaberUnzipper
 		}
 
 		/// <summary>
-		/// Checks the mapCache to see if the desired map is already present. If it is, <see cref="OnRequestComplete"/>
-		/// gets triggered immediately. Otherwise, trigger a download request for the given song and call <see cref="OnRequestComplete"/> when it completes.
+		/// Checks the mapCache to see if the desired map is already present. If it is, do nothing. Otherwise, trigger
+		/// a download request for the given song and call <see cref="OnDownloadFinished"/> when it completes.
 		/// </summary>
 		/// <param name="mapData">The map being requested</param>
-		/// <param name="OnRequestComplete"> What should be done with the downloaded and unzipped directory</param>
-		public void RequestMapAsync(MapData mapData, Action<string> OnRequestComplete)
+		public void RequestMapAsync(MapData mapData)
 		{
 			string mapDirectory = FileManager.GetMapDirectory(mapData);
-			
-			if(Directory.Exists(mapDirectory))
-				OnRequestComplete.Invoke(mapDirectory);
-			else
+			string zipFilePath = FileManager.GetZipFilePath(mapData);
+
+			// Don't bother downloading if we already have this map, or have already requested it.
+			if (mapsRequested.Contains(mapData.id))
 			{
-				string zipFilePath = FileManager.GetZipFilePath(mapData);
-				Console.WriteLine($"Downloading {mapData.name}");
-				songsLeftToDownload++;
-				BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, zipPath => OnDownloadFinished(zipPath, OnRequestComplete));
+				Console.WriteLine($"Already received a map request for : {mapData.name}");
+				return;
 			}
+			
+			if (Directory.Exists(mapDirectory))
+			{
+				Console.WriteLine($"Discovered existing map folder: {mapData.name}");
+				return;
+			}
+			
+			// Clean up old .zip files that likely have issues
+			if (File.Exists(zipFilePath))
+			{
+				Console.WriteLine($"Deleting .zip file from a previous run that got interrupted or failed to unzip: {mapData.name}");
+				File.Delete(zipFilePath);
+			}
+			
+			// Track new request and trigger .zip file download
+			mapsRequested.Add(mapData.id);
+			Console.WriteLine($"Downloading {mapData.name}");
+			songsLeftToDownload++;
+			BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, OnDownloadFinished);
 		}
 
 		public BPList RequestPlaylist(int playlistId, out string filePath)
@@ -53,11 +71,10 @@ namespace BeatSaberUnzipper
 			return bpList;
 		}
 
-		private void OnDownloadFinished(string zipFilePath, Action<string> onRequestComplete)
+		private void OnDownloadFinished(string zipFilePath)
 		{
 			FileManager.UnzipFile(zipFilePath, out string unzipDir);
 			songsLeftToDownload--;
-			onRequestComplete(unzipDir);
 		}
 	}
 }
