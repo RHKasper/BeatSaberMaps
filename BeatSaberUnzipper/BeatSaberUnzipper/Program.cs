@@ -34,7 +34,7 @@ namespace BeatSaberUnzipper
                     continue;
                 
                 Console.WriteLine("Saved Playlist: " + playlistPath);
-                Console.WriteLine("Queueing " + bpList.songs.Count + " for download...");
+                Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
 
                 // Download map data and trigger async map file downloads
                 foreach (Song song in bpList.songs)
