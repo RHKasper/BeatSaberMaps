@@ -17,15 +17,16 @@ namespace BeatSaberUnzipper
 
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Running Spotify Test");
-            await SpotifyTest.Test();
-            Console.WriteLine("Spotify Test Finished");
+            // Console.WriteLine("Hello World!");
+            // Console.WriteLine("Running Spotify Test");
+            // await SpotifyTest.Test();
+            // Console.WriteLine("Spotify Test Finished");
 
             FileManager.ClearOutputDirectories();
 
             songsLeftToDownload = 0;
-            
+
+            MapRequestManager mapRequestManager = new MapRequestManager(FileManager.MapCachePath);
             HashSet<string> mapIdsDownloaded = new HashSet<string>();
             
             foreach (int playlistId in PlaylistIds)
@@ -50,7 +51,7 @@ namespace BeatSaberUnzipper
                     MapData mapData = BeatSaverDownloader.GetMapData(song);
                     if (mapData == null)
                     {
-                        Console.WriteLine($"Downloading {song.songName} song data failed");
+                        Console.WriteLine($"Downloading {song.songName} map data failed");
                         continue;
                     }
             
@@ -58,12 +59,9 @@ namespace BeatSaberUnzipper
                         continue;
                     else
                         mapIdsDownloaded.Add(mapData.id);
-                
-                    string zipFileName = FileManager.GetZipFileName(mapData);
-                    string zipFilePath = FileManager.GetZipFilePath(zipFileName);
 
                     songsLeftToDownload++;
-                    BeatSaverDownloader.DownloadZipFile(mapData.GetLatestVersion().downloadURL, zipFilePath, OnSongFinishedDownloading);
+                    mapRequestManager.RequestMapAsync(mapData, OnSongFinishedDownloading);
                 }
             }
             

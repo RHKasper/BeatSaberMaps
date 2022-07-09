@@ -6,24 +6,19 @@ namespace BeatSaberUnzipper
 {
 	public static class FileManager
 	{
-		public const string DownloadsFolder = "C:\\Users\\fires\\Downloads";
+		public const string MapCachePath = "C:\\repos\\BeatSaberMaps\\Cache\\MapCache";
 		public const string BeatsaberMapsFolder = "C:\\repos\\BeatSaberMaps\\Beat Saber_Data\\CustomLevels";
 		public const string PlaylistsFolderPath = "C:\\repos\\BeatSaberMaps\\Playlists";
 		
 		public static void UnzipFile(string zipFilePath, bool deleteZipFile = true)
 		{
-			string targetDir = Path.Combine(FileManager.BeatsaberMapsFolder, Path.GetFileNameWithoutExtension(zipFilePath));
+			var targetDir = GetMapDirectory(zipFilePath);
 
 			try
 			{
-				if(Directory.Exists(targetDir))
-				{
+				if(Directory.Exists(targetDir)) 
 					Directory.Delete(targetDir, true);
-					//Console.WriteLine("Cleared " + targetDir);
-				}
-                        
 				ZipFile.ExtractToDirectory(zipFilePath, targetDir);
-				//Console.WriteLine("Extracted " + zipFilePath + " to " + targetDir);
 			}
 			catch(Exception e)
 			{
@@ -33,14 +28,25 @@ namespace BeatSaberUnzipper
 			if(deleteZipFile)
 				File.Delete(zipFilePath);
 		}
-		
+
+
+		public static string GetMapDirectory(MapData mapData) => GetMapDirectory(GetZipFilePath(GetZipFileName(mapData)));
+
+		public static string GetMapDirectory(string zipFilePath)
+		{
+			string targetDir = Path.Combine(BeatsaberMapsFolder, Path.GetFileNameWithoutExtension(zipFilePath));
+			return targetDir;
+		}
+
 		public static string GetZipFilePath(string zipFileName)
 		{
-			string zipFilePath = Path.Combine(FileManager.BeatsaberMapsFolder, zipFileName);
+			string zipFilePath = Path.Combine(BeatsaberMapsFolder, zipFileName);
 			foreach (char c in Path.GetInvalidPathChars())
 				zipFileName = zipFileName.Replace(c + "", "");
 			return zipFilePath;
 		}
+		
+		public static string GetZipFilePath(MapData mapData) => GetZipFilePath(GetZipFileName(mapData));
 
 		public static string GetZipFileName(MapData mapData)
 		{
@@ -52,13 +58,13 @@ namespace BeatSaberUnzipper
 		
 		public static void ClearOutputDirectories()
 		{
-			if (Directory.Exists(FileManager.BeatsaberMapsFolder))
-				Directory.Delete(FileManager.BeatsaberMapsFolder, true);
-			Directory.CreateDirectory(FileManager.BeatsaberMapsFolder);
+			if (Directory.Exists(BeatsaberMapsFolder))
+				Directory.Delete(BeatsaberMapsFolder, true);
+			Directory.CreateDirectory(BeatsaberMapsFolder);
 
-			if (Directory.Exists(FileManager.PlaylistsFolderPath))
-				Directory.Delete(FileManager.PlaylistsFolderPath, true);
-			Directory.CreateDirectory(FileManager.PlaylistsFolderPath);
+			if (Directory.Exists(PlaylistsFolderPath))
+				Directory.Delete(PlaylistsFolderPath, true);
+			Directory.CreateDirectory(PlaylistsFolderPath);
 		}
 	}
 }
