@@ -11,9 +11,10 @@ namespace BeatSaberUnzipper
 	public static class SpotifyTest
 	{
 		private const string NullLabel = "NULL";
-		public static async Task GenerateBeatSaberPlaylists(IEnumerable<string> spotifyPlaylistUrls)
+		public static async Task<List<BPList>> GenerateBeatSaberPlaylists(IEnumerable<string> spotifyPlaylistUrls)
 		{
 			SpotifyClient spotify = await CreateClient();
+			List<BPList> generatedPlaylists = new List<BPList>();
 			
 			foreach (string playlistUrl in spotifyPlaylistUrls)
 			{
@@ -21,6 +22,14 @@ namespace BeatSaberUnzipper
 				FullPlaylist playlist = await spotify.Playlists.Get(playlistID);
 				
 				Console.WriteLine( $"{playlist.Name}");
+				BPList bpList = new BPList
+				{
+					playlistTitle = playlist.Name,
+					playlistAuthor = "Spotify",
+					playlistDescription = playlist.Description,
+					songs = new List<Song>(),
+					image = playlist.Images[0].ToString()
+				};
 				
 				Paging<PlaylistTrack<IPlayableItem>> trackPage = await spotify.Playlists.GetItems(playlist.Id);
 				// TODO: don't paginate all at once
@@ -32,15 +41,34 @@ namespace BeatSaberUnzipper
 				{
 					if (track.Track is FullTrack fullTrack)
 					{
-						Doc desiredMap = BeatSaverDownloader.SearchForTrack(fullTrack);
+						Doc desiredMap = BeatSaverSearchFilter.SearchForTrack(fullTrack);
 						string trackTitle = $"{fullTrack.Name} (by {fullTrack.Artists[0].Name})";
 						string mapTitle = $"{(desiredMap == default ? NullLabel : desiredMap.name)}";
 						Console.WriteLine($"{trackTitle} ========== {mapTitle}");
+
+						if (desiredMap != null)
+						{
+							Version version = desiredMap.versions.First();
+							bpList.songs.Add(new Song
+							{
+								hash = version.hash,
+								key = version.key,
+								songName = desiredMap.name,
+							});
+						}
 					}
 				}
-
+				
 				Console.WriteLine();
+				
+				string json = bpList.ToJson();
+				Console.WriteLine(json);
+				string playlistPath = Path.Combine(FileManager.PlaylistsCachePath, playlist.Name + ".bplist");
+				await File.WriteAllTextAsync(playlistPath, json);
+				generatedPlaylists.Add(bpList);
 			}
+
+			return generatedPlaylists;
 		}
 
 		private static async Task<SpotifyClient> CreateClient()

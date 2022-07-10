@@ -17,17 +17,26 @@ namespace BeatSaberUnzipper
         private static readonly string[] SpotifyPlaylistUrls =
         {
             "https://open.spotify.com/playlist/13sMTwbmntrlaNZhOvUnJ3?si=7a19414a763a49b7",
-            "https://open.spotify.com/playlist/7ms1M4Jp5PUpr1R8FQnTTd?si=d7d22913e979489c"
+            "https://open.spotify.com/playlist/7ms1M4Jp5PUpr1R8FQnTTd?si=d7d22913e979489c",
+            "https://open.spotify.com/playlist/6zo2umb7lSVNoW8UxnZBDj?si=c932c000dc2240aa",
         };
         static async Task Main(string[] args)
         {
+            MapRequestManager mapRequestManager = new MapRequestManager();
+            
+            // Generate and download spotify playlists
             Console.WriteLine("Hello World!");
             Console.WriteLine("Running Spotify Test");
-            await SpotifyTest.GenerateBeatSaberPlaylists(SpotifyPlaylistUrls);
+            var playlists = await SpotifyTest.GenerateBeatSaberPlaylists(SpotifyPlaylistUrls);
+            foreach (BPList bpList in playlists)
+            {
+                // Download map data and trigger async map file downloads
+                foreach (Song song in bpList.songs) 
+                    mapRequestManager.RequestMapDataAsync(song);
+            }
             Console.WriteLine("Spotify Test Finished");
-
-            MapRequestManager mapRequestManager = new MapRequestManager();
-
+            
+            // Download beatsaver playlists
             foreach (int playlistId in PlaylistIds)
             {
                 // Download Playlist
