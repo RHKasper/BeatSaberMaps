@@ -78,10 +78,15 @@ namespace BeatSaberUnzipper
 		{
 			foreach (string mapFolderPath in mapFolderPaths)
 			{
-				string filename = Path.GetFileName(mapFolderPath);
-				string target = Path.Combine(MapsOutputFolderPath, filename);
-				Console.WriteLine($"Copying {mapFolderPath} to {target}");
-				CopyDirectory(mapFolderPath, target);
+				if (Directory.Exists(mapFolderPath))
+				{
+					string filename = Path.GetFileName(mapFolderPath);
+					string target = Path.Combine(MapsOutputFolderPath, filename);
+					Console.WriteLine($"Copying {mapFolderPath} to {target}");
+					CopyDirectory(mapFolderPath, target);
+				}
+				else
+					Console.WriteLine($"Map Directory {mapFolderPath} doesn't exist");
 			}
 		}
 

@@ -13,12 +13,11 @@ namespace BeatSaberUnzipper
 {
     class Program
     {
-        private static readonly int[] PlaylistIds = { };//{ 3210, 2363, 2364, 3209};
+        private static readonly int[] PlaylistIds = { 3210, 2363, 2364, 3209};
         private static readonly string[] SpotifyPlaylistUrls =
         {
-            "https://open.spotify.com/playlist/13sMTwbmntrlaNZhOvUnJ3?si=7a19414a763a49b7",
-            "https://open.spotify.com/playlist/7ms1M4Jp5PUpr1R8FQnTTd?si=d7d22913e979489c",
-            "https://open.spotify.com/playlist/6zo2umb7lSVNoW8UxnZBDj?si=c932c000dc2240aa",
+            "https://open.spotify.com/playlist/6zo2umb7lSVNoW8UxnZBDj?si=c932c000dc2240aa",// Jean's beatsaber songs
+            "https://open.spotify.com/playlist/5amvBdeHBkmRWXhTfEAbOB?si=67a5df560dc84430",// Long-term favorites
         };
         static async Task Main(string[] args)
         {
@@ -54,7 +53,7 @@ namespace BeatSaberUnzipper
             
             Stopwatch timer = Stopwatch.StartNew();
 
-            while ((timer.Elapsed.TotalSeconds < 10 && mapRequestManager.mapDataLeftToDownload >0 ) || mapRequestManager.zipFilesLeftToDownload > 0)
+            while (timer.Elapsed.TotalSeconds < 10 && (mapRequestManager.mapDataLeftToDownload >0 || mapRequestManager.zipFilesLeftToDownload > 0))
             {
                 Console.WriteLine($"Waiting for {mapRequestManager.mapDataLeftToDownload} map data requests and {mapRequestManager.zipFilesLeftToDownload} zip file requests");
                 Thread.Sleep(750);
