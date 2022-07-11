@@ -22,7 +22,7 @@ namespace BeatSaberUnzipper
 				string playlistID = GetPlaylistIdFromUrl(playlistUrl);
 				FullPlaylist playlist = await spotify.Playlists.Get(playlistID);
 				
-				Console.WriteLine( $"{playlist.Name}");
+				Console.WriteLine( $"Playlist: {playlist.Name}");
 				BPList bpList = new BPList
 				{
 					playlistTitle = playlist.Name,
@@ -62,7 +62,6 @@ namespace BeatSaberUnzipper
 				Console.WriteLine();
 
 				string json = JsonConvert.SerializeObject(bpList);
-				Console.WriteLine(json);
 				string playlistPath = Path.Combine(FileManager.PlaylistsCachePath, playlist.Name + ".bplist");
 				await File.WriteAllTextAsync(playlistPath, json);
 				generatedPlaylists.Add(bpList);

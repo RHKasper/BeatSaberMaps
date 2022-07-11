@@ -25,17 +25,19 @@ namespace BeatSaberUnzipper
             FileManager.ClearPlaylistsCache();
             
             // Generate and download spotify playlists
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Running Spotify Test");
+            Console.WriteLine("Generating spotify playlists...\n");
             var playlists = await SpotifyTest.GenerateBeatSaberPlaylists(SpotifyPlaylistUrls);
+            Console.WriteLine("Spotify Playlist Generation Complete.\n\n");
+            
             foreach (BPList bpList in playlists)
             {
                 // Download map data and trigger async map file downloads
                 foreach (Song song in bpList.songs) 
                     mapRequestManager.RequestMapDataAsync(song);
             }
-            Console.WriteLine("Spotify Test Finished");
             
+
+            Console.WriteLine("Downloading BeatSaver playlists...\n");
             // Download beatsaver playlists
             foreach (int playlistId in PlaylistIds)
             {

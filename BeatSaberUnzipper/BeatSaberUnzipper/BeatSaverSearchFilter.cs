@@ -46,13 +46,13 @@ namespace BeatSaberUnzipper
 		
 		public static Doc GetBestMap(FullTrack fullTrack, SearchQuery searchQuery)
 		{
-			Console.WriteLine($"\n\nSearch results for: {fullTrack.Name} ({string.Join(", ", fullTrack.Artists.Select(a=>a.Name))})\n");
-
-			foreach (Doc doc in searchQuery.docs)
-			{
-				Console.WriteLine($"{doc.name} =====  Score: {doc.stats.score}");
-			}
-			
+			// Console.WriteLine($"\n\nSearch results for: {fullTrack.Name} ({string.Join(", ", fullTrack.Artists.Select(a=>a.Name))})\n");
+			//
+			// foreach (Doc doc in searchQuery.docs)
+			// {
+			// 	Console.WriteLine($"{doc.name} =====  Score: {doc.stats.score}");
+			// }
+			//
 			return searchQuery.docs.First();
 		}
 	}
