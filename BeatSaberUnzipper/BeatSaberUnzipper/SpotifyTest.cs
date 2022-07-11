@@ -38,7 +38,13 @@ namespace BeatSaberUnzipper
 				{
 					if (track.Track is FullTrack fullTrack)
 					{
-						Doc desiredMap = BeatSaverSearchFilter.SearchForTrack(fullTrack);
+						SearchConfig searchConfig = new SearchConfig()
+						{
+							FullTrack = fullTrack,
+							AcceptableDifficulties = new []{Diff.Normal, Diff.Hard, Diff.Expert},
+						};
+							
+						Doc desiredMap = BeatSaverSearchFilter.SearchForTrack(searchConfig);
 						string trackTitle = $"{fullTrack.Name} (by {fullTrack.Artists[0].Name})";
 						string mapTitle = $"{(desiredMap == default ? NullLabel : desiredMap.name)}";
 						Console.WriteLine($"{trackTitle} ========== {mapTitle}");

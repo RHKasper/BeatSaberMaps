@@ -72,6 +72,12 @@ public class BPList
 
     public class Diff
     {
+        public const string Easy = "Easy";
+        public const string Normal = "Normal";
+        public const string Hard = "Hard";
+        public const string Expert = "Expert";
+        public const string ExpertPlus = "ExpertPlus";
+
         public int bombs { get; set; }
         public string characteristic { get; set; }
         public bool chroma { get; set; }

@@ -11,11 +11,10 @@ namespace BeatSaberUnzipper
 		/// <summary>
 		/// https://api.beatsaver.com/docs/index.html?url=./swagger.json#/OrderedMap%20%7B%20%22name%22%3A%20%22Search%22%20%7D/get_search_text__page_
 		/// </summary>
-		/// <returns>Hash of the chosen map, or empty if no viable map is found</returns>
-		public static Doc SearchForTrack(FullTrack fullTrack)
+		public static Doc SearchForTrack(SearchConfig searchConfig)
 		{
-			string title = fullTrack.Name;
-			string firstArtist = fullTrack.Artists.First().Name;
+			string title = searchConfig.FullTrack.Name;
+			string firstArtist = searchConfig.FullTrack.Artists.First().Name;
             
 			bool allowChroma = false, allowCinema = false, allowNoodle = false, requireCurated = false;
             
@@ -35,7 +34,7 @@ namespace BeatSaberUnzipper
 			{
 				string fileContents = BeatSaverDownloader.Get(uri);
 				SearchQuery searchQuery = JsonConvert.DeserializeObject<SearchQuery>(fileContents);
-				var selectedMapDoc = GetBestMap(fullTrack, searchQuery);
+				var selectedMapDoc = GetBestMap(searchConfig.FullTrack, searchQuery, searchConfig);
 				return selectedMapDoc;
 			}
 			catch
@@ -44,16 +43,45 @@ namespace BeatSaberUnzipper
 			}
 		}
 		
-		public static Doc GetBestMap(FullTrack fullTrack, SearchQuery searchQuery)
+		public static Doc GetBestMap(FullTrack fullTrack, SearchQuery searchQuery, SearchConfig searchConfig)
 		{
-			// Console.WriteLine($"\n\nSearch results for: {fullTrack.Name} ({string.Join(", ", fullTrack.Artists.Select(a=>a.Name))})\n");
-			//
-			// foreach (Doc doc in searchQuery.docs)
-			// {
-			// 	Console.WriteLine($"{doc.name} =====  Score: {doc.stats.score}");
-			// }
-			//
+			Console.WriteLine($"\n\nSearch results for: {fullTrack.Name} ({string.Join(", ", fullTrack.Artists.Select(a=>a.Name))})\n");
+
+			for (int i = searchQuery.docs.Count - 1; i >= 0; i--)
+			{
+				Doc doc = searchQuery.docs[i];
+				Version version = doc.GetLatestVersion();
+				
+				// Remove maps that don't have the desired difficulties
+				if (!version.diffs.Any(diff => searchConfig.AcceptableDifficulties.Any(a => a == diff.difficulty)))
+					searchQuery.docs.Remove(doc);
+				
+				// Remove maps with low ratings and many downvotes
+				else if (doc.stats.score <= searchConfig.MinRating && doc.stats.downvotes > searchConfig.MaxDownvotes)
+					searchQuery.docs.Remove(doc);
+			}
+
+			searchQuery.docs = searchQuery.docs.Where(d => d.GetLatestVersion().diffs.Any(diff => searchConfig.AcceptableDifficulties.Any(a => a == diff.difficulty))).ToList();
+			
+			foreach (Doc doc in searchQuery.docs)
+			{
+				Version version = doc.GetLatestVersion();
+				Console.WriteLine($"{doc.name} =====  Score: {doc.stats.score}; DiffStats: [{string.Join(',', version.diffs.Select(d=>d.difficulty))}]");
+			}
+			
 			return searchQuery.docs.First();
 		}
+	}
+
+	public class SearchConfig
+	{
+		public FullTrack FullTrack;
+		public string[] AcceptableDifficulties;
+		
+		/// <summary>
+		/// a track is excluded if it has less than <see cref="MinRating"/> AND fewer than <see cref="MaxDownvotes"/> downvotes
+		/// </summary>
+		public float MinRating = .75f; //0-1
+		public int MaxDownvotes = 5;
 	}
 }
