@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SpotifyAPI.Web;
 using Swan;
 
@@ -28,7 +29,6 @@ namespace BeatSaberUnzipper
 					playlistAuthor = "Spotify",
 					playlistDescription = playlist.Description,
 					songs = new List<Song>(),
-					image = playlist.Images[0].ToString()
 				};
 				
 				Paging<PlaylistTrack<IPlayableItem>> trackPage = await spotify.Playlists.GetItems(playlist.Id);
@@ -60,8 +60,8 @@ namespace BeatSaberUnzipper
 				}
 				
 				Console.WriteLine();
-				
-				string json = bpList.ToJson();
+
+				string json = JsonConvert.SerializeObject(bpList);
 				Console.WriteLine(json);
 				string playlistPath = Path.Combine(FileManager.PlaylistsCachePath, playlist.Name + ".bplist");
 				await File.WriteAllTextAsync(playlistPath, json);

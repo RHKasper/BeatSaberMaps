@@ -311,3 +311,4 @@ project.lock.json
 Beat Saber_Data/
 Cache/
 output/
+bin/
