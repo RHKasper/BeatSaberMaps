@@ -31,13 +31,10 @@ namespace BeatSaberUnzipper
 					songs = new List<Song>(),
 				};
 				
-				Paging<PlaylistTrack<IPlayableItem>> trackPage = await spotify.Playlists.GetItems(playlist.Id);
-				// TODO: don't paginate all at once
-				IList<PlaylistTrack<IPlayableItem>> allTracks = await spotify.PaginateAll(trackPage);
-				
-				Console.WriteLine($"{allTracks.Count} tracks");
+				// we need the first page
+				Paging<PlaylistTrack<IPlayableItem>> page = await spotify.Playlists.GetItems(playlist.Id);
 
-				foreach (PlaylistTrack<IPlayableItem> track in allTracks)
+				await foreach(var track in spotify.Paginate(page))
 				{
 					if (track.Track is FullTrack fullTrack)
 					{

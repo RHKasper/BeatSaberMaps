@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace BeatSaberUnzipper
 {
@@ -16,8 +10,8 @@ namespace BeatSaberUnzipper
         private static readonly int[] PlaylistIds = { 3210, 2363, 2364, 3209};
         private static readonly string[] SpotifyPlaylistUrls =
         {
-            "https://open.spotify.com/playlist/6zo2umb7lSVNoW8UxnZBDj?si=c932c000dc2240aa",// Jean's beatsaber songs
-            "https://open.spotify.com/playlist/5amvBdeHBkmRWXhTfEAbOB?si=67a5df560dc84430",// Long-term favorites
+            SpotifyPlaylists.LongtermFavorites, 
+            SpotifyPlaylists.JeanPossibleBeatsabers,
         };
         static async Task Main(string[] args)
         {
