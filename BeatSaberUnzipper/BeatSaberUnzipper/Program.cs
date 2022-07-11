@@ -22,6 +22,7 @@ namespace BeatSaberUnzipper
         static async Task Main(string[] args)
         {
             MapRequestManager mapRequestManager = new MapRequestManager();
+            FileManager.ClearPlaylistsCache();
             
             // Generate and download spotify playlists
             Console.WriteLine("Hello World!");

@@ -71,6 +71,13 @@ namespace BeatSaberUnzipper
 				Directory.Delete(PlaylistsOutputFolderPath, true);
 			Directory.CreateDirectory(PlaylistsOutputFolderPath);
 		}
+		
+		public static void ClearPlaylistsCache()
+		{
+			if (Directory.Exists(PlaylistsCachePath))
+				Directory.Delete(PlaylistsCachePath, true);
+			Directory.CreateDirectory(PlaylistsCachePath);
+		}
 
 		public static void ExportPlaylists() => CopyDirectory(PlaylistsCachePath, PlaylistsOutputFolderPath);
 
