@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class CustomData
 {
@@ -10,6 +11,24 @@ public class CustomData
 
 public class Song
 {
+    protected bool Equals(Song other)
+    {
+        return key == other.key && hash == other.hash && songName == other.songName;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((Song)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(key, hash, songName);
+    }
+
     public string key { get; set; }
     public string hash { get; set; }
     public string songName { get; set; }
@@ -23,6 +42,11 @@ public class BPList
     public string image { get; set; }
     public CustomData customData { get; set; }
     public List<Song> songs { get; set; }
+
+    public void RemoveDuplicates()
+    {
+        songs = new HashSet<Song>(songs).ToList();
+    }
 }
 
 

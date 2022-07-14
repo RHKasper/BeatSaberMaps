@@ -19,55 +19,64 @@ namespace BeatSaberUnzipper
 			
 			foreach (string playlistUrl in spotifyPlaylistUrls)
 			{
-				string playlistID = GetPlaylistIdFromUrl(playlistUrl);
-				FullPlaylist playlist = await spotify.Playlists.Get(playlistID);
-				
-				Console.WriteLine( $"Playlist: {playlist.Name}");
-				BPList bpList = new BPList
+				try
 				{
-					playlistTitle = playlist.Name,
-					playlistAuthor = "Spotify",
-					playlistDescription = playlist.Description,
-					songs = new List<Song>(),
-				};
-				
-				// we need the first page
-				Paging<PlaylistTrack<IPlayableItem>> page = await spotify.Playlists.GetItems(playlist.Id);
+					string playlistID = GetPlaylistIdFromUrl(playlistUrl);
+					FullPlaylist playlist = await spotify.Playlists.Get(playlistID);
 
-				await foreach(var track in spotify.Paginate(page))
-				{
-					if (track.Track is FullTrack fullTrack)
+					Console.WriteLine($"Playlist: {playlist.Name}");
+					BPList bpList = new BPList
 					{
-						SearchConfig searchConfig = new SearchConfig()
-						{
-							FullTrack = fullTrack,
-							AcceptableDifficulties = new []{Diff.Normal, Diff.Hard, Diff.Expert},
-						};
-							
-						Doc desiredMap = BeatSaverSearchFilter.SearchForTrack(searchConfig);
-						string trackTitle = $"{fullTrack.Name} (by {fullTrack.Artists[0].Name})";
-						string mapTitle = $"{(desiredMap == default ? NullLabel : desiredMap.name)}";
-						Console.WriteLine($"{trackTitle} ========== {mapTitle}");
+						playlistTitle = playlist.Name,
+						playlistAuthor = "Spotify",
+						playlistDescription = playlist.Description,
+						songs = new List<Song>(),
+					};
 
-						if (desiredMap != null)
+					// we need the first page
+					Paging<PlaylistTrack<IPlayableItem>> page = await spotify.Playlists.GetItems(playlist.Id);
+
+					await foreach (var track in spotify.Paginate(page))
+					{
+						if (track.Track is FullTrack fullTrack)
 						{
-							Version version = desiredMap.versions.First();
-							bpList.songs.Add(new Song
+							SearchConfig searchConfig = new SearchConfig()
 							{
-								hash = version.hash,
-								key = version.key,
-								songName = desiredMap.name,
-							});
+								FullTrack = fullTrack,
+								AcceptableDifficulties = new[] { Diff.Normal, Diff.Hard, Diff.Expert },
+							};
+
+							Doc desiredMap = BeatSaverSearchFilter.SearchForTrack(searchConfig);
+							string trackTitle = $"{fullTrack.Name} (by {fullTrack.Artists[0].Name})";
+							string mapTitle = $"{(desiredMap == default ? NullLabel : desiredMap.name)}";
+							Console.WriteLine($"{trackTitle} ========== {mapTitle}");
+
+							if (desiredMap != null)
+							{
+								Version version = desiredMap.versions.First();
+								bpList.songs.Add(new Song
+								{
+									hash = version.hash,
+									key = version.key,
+									songName = desiredMap.name,
+								});
+							}
 						}
 					}
-				}
-				
-				Console.WriteLine();
 
-				string json = JsonConvert.SerializeObject(bpList);
-				string playlistPath = Path.Combine(FileManager.PlaylistsCachePath, playlist.Name + ".bplist");
-				await File.WriteAllTextAsync(playlistPath, json);
-				generatedPlaylists.Add(bpList);
+					bpList.RemoveDuplicates();
+
+					Console.WriteLine();
+
+					string json = JsonConvert.SerializeObject(bpList);
+					string playlistPath = Path.Combine(FileManager.PlaylistsCachePath, playlist.Name + ".bplist");
+					await File.WriteAllTextAsync(playlistPath, json);
+					generatedPlaylists.Add(bpList);
+				}
+				catch(Exception e)
+				{
+					Console.WriteLine(e);
+				}
 			}
 
 			return generatedPlaylists;

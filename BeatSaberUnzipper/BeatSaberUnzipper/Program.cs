@@ -10,11 +10,17 @@ namespace BeatSaberUnzipper
         private static readonly int[] PlaylistIds = { 3210, 2363, 2364, 3209};
         private static readonly string[] SpotifyPlaylistUrls =
         {
+            SpotifyPlaylists.AllLikes,
             SpotifyPlaylists.LongtermFavorites, 
             SpotifyPlaylists.JeanPossibleBeatsabers,
+            SpotifyPlaylists.EdmForJean,
+            SpotifyPlaylists.TopSongs2021
         };
+        
+        
         static async Task Main(string[] args)
         {
+            Stopwatch overallTimer = Stopwatch.StartNew();
             MapRequestManager mapRequestManager = new MapRequestManager();
             FileManager.ClearPlaylistsCache();
             
@@ -55,13 +61,16 @@ namespace BeatSaberUnzipper
                 Console.WriteLine($"Waiting for {mapRequestManager.mapDataLeftToDownload} map data requests and {mapRequestManager.zipFilesLeftToDownload} zip file requests");
                 Thread.Sleep(750);
             }
-            
+
+            mapRequestManager.PreventDownloads = true;
             Console.WriteLine("Song and playlist download complete\n");
             
             Console.WriteLine("Generating output folders from caches");
             FileManager.ClearOutputDirectories();
             FileManager.ExportPlaylists();
             FileManager.ExportMaps(mapRequestManager.mapFoldersToOutput);
+            
+            Console.WriteLine($"Finished Map and Playlist export. Total program runtime: {timer.Elapsed.TotalSeconds} seconds");
         }
     }
 }

@@ -17,7 +17,7 @@ namespace BeatSaberUnzipper
 		private Queue<Song> mapDataRequestQueue = new();
 
 		private int maxMapDataRequests = 10;
-
+		public bool PreventDownloads = false;
 
 		public MapRequestManager()
 		{
@@ -51,8 +51,11 @@ namespace BeatSaberUnzipper
 			string uri = "https://api.beatsaver.com/maps/hash/" + song.hash;
 			BeatSaverDownloader.GetMapData(uri,data =>
 			{
-				mapDataLeftToDownload--;
-				RequestMapAsync(data);
+				if (!PreventDownloads)
+				{
+					mapDataLeftToDownload--;
+					RequestMapAsync(data);
+				}
 			});
 		}
 
