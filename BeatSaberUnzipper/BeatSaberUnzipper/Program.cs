@@ -70,7 +70,7 @@ namespace BeatSaberUnzipper
             FileManager.ExportPlaylists();
             FileManager.ExportMaps(mapRequestManager.mapFoldersToOutput);
             
-            Console.WriteLine($"Finished Map and Playlist export. Total program runtime: {timer.Elapsed.TotalSeconds} seconds");
+            Console.WriteLine($"Finished Map and Playlist export. Total program runtime: {overallTimer.Elapsed.TotalSeconds} seconds");
         }
     }
 }
