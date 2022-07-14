@@ -7,14 +7,15 @@ namespace BeatSaberUnzipper
 {
     class Program
     {
-        private static readonly int[] PlaylistIds = { 3210, 2363, 2364, 3209};
+        private static readonly int[] PlaylistIds = { 3210, 2363, 2364, 3209, 7038};
         private static readonly string[] SpotifyPlaylistUrls =
         {
             SpotifyPlaylists.AllLikes,
             SpotifyPlaylists.LongtermFavorites, 
             SpotifyPlaylists.JeanPossibleBeatsabers,
             SpotifyPlaylists.EdmForJean,
-            SpotifyPlaylists.TopSongs2021
+            SpotifyPlaylists.TopSongs2021,
+            SpotifyPlaylists.ThisIsZedd
         };
         
         

@@ -35,11 +35,14 @@ namespace BeatSaberUnzipper
 
 					// we need the first page
 					Paging<PlaylistTrack<IPlayableItem>> page = await spotify.Playlists.GetItems(playlist.Id);
+					int requestedTracks = 0;
+					int foundTracks = 0;
 
 					await foreach (var track in spotify.Paginate(page))
 					{
 						if (track.Track is FullTrack fullTrack)
 						{
+							requestedTracks++;
 							SearchConfig searchConfig = new SearchConfig()
 							{
 								FullTrack = fullTrack,
@@ -60,13 +63,14 @@ namespace BeatSaberUnzipper
 									key = version.key,
 									songName = desiredMap.name,
 								});
+								foundTracks++;
 							}
 						}
 					}
 
 					bpList.RemoveDuplicates();
 
-					Console.WriteLine();
+					Console.WriteLine($"\n{playlist.Name}: Found {foundTracks} out of {requestedTracks} ({((float)foundTracks/requestedTracks)*100}%)\n");
 
 					string json = JsonConvert.SerializeObject(bpList);
 					string playlistPath = Path.Combine(FileManager.PlaylistsCachePath, playlist.Name + ".bplist");

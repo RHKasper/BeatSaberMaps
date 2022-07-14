@@ -7,6 +7,7 @@
 		public const string LongtermFavorites = "https://open.spotify.com/playlist/5amvBdeHBkmRWXhTfEAbOB?si=67a5df560dc84430";
 		public const string EdmForJean = "https://open.spotify.com/playlist/5YwFZ1EJuUTK1gdDVEua11?si=d82d41c0f4b946bd";
 		public const string TopSongs2021 = "https://open.spotify.com/playlist/37i9dQZF1EUMDoJuT8yJsl?si=bdec00487a864934";
+		public const string ThisIsZedd = "https://open.spotify.com/playlist/37i9dQZF1DWVM4VqFGeMe4?si=cd919f17e2b44763";
 
 	}
 }
