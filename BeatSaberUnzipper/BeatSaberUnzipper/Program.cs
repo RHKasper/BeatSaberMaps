@@ -28,7 +28,7 @@ namespace BeatSaberUnzipper
             FileManager.ClearImagesCache();
             
             await GenerateBsPlaylistsFromSpotify(mapRequestManager);
-            //DownloadBeatSaverPlaylists(mapRequestManager);
+            DownloadBeatSaverPlaylists(mapRequestManager);
 
             Stopwatch timer = Stopwatch.StartNew();
 

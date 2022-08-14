@@ -46,7 +46,7 @@ namespace BeatSaberUnzipper
 						songs = new List<Song>(),
 						image = base64Image,
 					};
-
+					
 					// we need the first page
 					Paging<PlaylistTrack<IPlayableItem>> page = await spotify.Playlists.GetItems(playlist.Id);
 					int requestedTracks = 0;
