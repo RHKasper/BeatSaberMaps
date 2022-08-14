@@ -31,8 +31,11 @@ namespace BeatSaberUnzipper
 					
 					// Get Playlist image from URL
 					string playlistImagePath = await DownloadPlaylistImage(playlist);
+					string base64Image = ImageEncoderDecoder.Base64Encode(playlistImagePath);
+					string base64ImagePath = Path.ChangeExtension(playlistImagePath, ".txt");
+					await File.WriteAllTextAsync(base64ImagePath, base64Image);
 
-					continue;
+					// todo: potentially resize image to make it smol
 					
 					// Generate Beatsaber BPList 
 					BPList bpList = new BPList
@@ -41,6 +44,7 @@ namespace BeatSaberUnzipper
 						playlistAuthor = "Spotify",
 						playlistDescription = playlist.Description,
 						songs = new List<Song>(),
+						image = base64Image,
 					};
 
 					// we need the first page
@@ -116,8 +120,7 @@ namespace BeatSaberUnzipper
 			string filename = playlist.Name + " Cover";
 			
 			// Request Image		
-			await BeatSaverDownloader.DownloadImageAsync(dir, filename, new Uri(imageUrl));
-			return Path.Combine(dir, filename);
+			return await BeatSaverDownloader.DownloadImageAsync(dir, filename, new Uri(imageUrl));
 		}
 	}
 }

@@ -93,7 +93,7 @@ namespace BeatSaberUnzipper
             return result;
         }
 
-        public static async Task DownloadImageAsync(string directoryPath, string fileName, Uri uri)
+        public static async Task<string> DownloadImageAsync(string directoryPath, string fileName, Uri uri)
         {
             using var httpClient = new HttpClient();
 
@@ -114,6 +114,7 @@ namespace BeatSaberUnzipper
             // Download the image and write to the file
             var imageBytes = await httpClient.GetByteArrayAsync(uri);
             await File.WriteAllBytesAsync(path, imageBytes);
+            return path;
         }
     }
 }
