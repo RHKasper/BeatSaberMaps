@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SpotifyAPI.Web;
@@ -21,10 +24,17 @@ namespace BeatSaberUnzipper
 			{
 				try
 				{
+					// Get Playlist from Spotify API
 					string playlistID = GetPlaylistIdFromUrl(playlistUrl);
 					FullPlaylist playlist = await spotify.Playlists.Get(playlistID);
-
 					Console.WriteLine($"Playlist: {playlist.Name}");
+					
+					// Get Playlist image from URL
+					string playlistImagePath = await DownloadPlaylistImage(playlist);
+
+					continue;
+					
+					// Generate Beatsaber BPList 
 					BPList bpList = new BPList
 					{
 						playlistTitle = playlist.Name,
@@ -96,5 +106,18 @@ namespace BeatSaberUnzipper
 		}
 
 		private static string GetPlaylistIdFromUrl(string url) => Path.GetFileName(url).Split('?')[0];
+
+		private static async Task<string> DownloadPlaylistImage(FullPlaylist playlist)
+		{
+			// Get image URL
+			string imageUrl = playlist.Images.First().Url;
+
+			string dir = FileManager.ImagesCachePath;
+			string filename = playlist.Name + " Cover";
+			
+			// Request Image		
+			await BeatSaverDownloader.DownloadImageAsync(dir, filename, new Uri(imageUrl));
+			return Path.Combine(dir, filename);
+		}
 	}
 }

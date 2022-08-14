@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SpotifyAPI.Web;
 
@@ -91,9 +93,27 @@ namespace BeatSaberUnzipper
             return result;
         }
 
-        public static void GetAsync(string uri, Action<string> callback)
+        public static async Task DownloadImageAsync(string directoryPath, string fileName, Uri uri)
         {
-            
+            using var httpClient = new HttpClient();
+
+            // Get the file extension
+            var uriWithoutQuery = uri.GetLeftPart(UriPartial.Path);
+            var fileExtension = Path.GetExtension(uriWithoutQuery);
+
+            // Create file path and ensure directory exists
+            var path = Path.Combine(directoryPath, $"{fileName}{fileExtension}");
+            Directory.CreateDirectory(directoryPath);
+
+            if (Path.HasExtension(path) == false)
+            {
+                Console.WriteLine($"{path} doesn't have a file extension. Assuming it's a .png file.");
+                path += ".png";
+            }
+
+            // Download the image and write to the file
+            var imageBytes = await httpClient.GetByteArrayAsync(uri);
+            await File.WriteAllBytesAsync(path, imageBytes);
         }
     }
 }

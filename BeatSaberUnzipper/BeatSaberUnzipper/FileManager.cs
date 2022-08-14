@@ -11,6 +11,8 @@ namespace BeatSaberUnzipper
 	{
 		public const string MapCachePath = "C:\\repos\\BeatSaberMaps\\Cache\\MapCache";
 		public const string PlaylistsCachePath = "C:\\repos\\BeatSaberMaps\\Cache\\Playlists";
+		public const string ImagesCachePath = "C:\\repos\\BeatSaberMaps\\Cache\\Images";
+		
 		public const string MapsOutputFolderPath = "C:\\repos\\BeatSaberMaps\\output\\CustomLevels";
 		public const string PlaylistsOutputFolderPath = "C:\\repos\\BeatSaberMaps\\output\\Playlists";
 		

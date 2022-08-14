@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Aspose.Imaging" Version="22.8.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
       <PackageReference Include="SpotifyAPI.Web.Auth" Version="6.2.2" />
     </ItemGroup>

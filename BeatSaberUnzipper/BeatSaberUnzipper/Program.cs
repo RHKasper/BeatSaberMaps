@@ -7,15 +7,16 @@ namespace BeatSaberUnzipper
 {
     class Program
     {
-        private static readonly int[] PlaylistIds = { 3210, 2363, 2364, 3209, 7038};
+        private static readonly int[] PlaylistIds = {3210, 2363, 2364, 3209, 7038};
         private static readonly string[] SpotifyPlaylistUrls =
         {
             SpotifyPlaylists.AllLikes,
             SpotifyPlaylists.LongtermFavorites, 
             SpotifyPlaylists.JeanPossibleBeatsabers,
             SpotifyPlaylists.EdmForJean,
-            SpotifyPlaylists.TopSongs2021,
-            SpotifyPlaylists.ThisIsZedd
+            SpotifyPlaylists.ThisIsZedd,
+            SpotifyPlaylists.BeatsaberBarbara,
+            SpotifyPlaylists.ThisIsIllenium,
         };
         
         
@@ -25,36 +26,9 @@ namespace BeatSaberUnzipper
             MapRequestManager mapRequestManager = new MapRequestManager();
             FileManager.ClearPlaylistsCache();
             
-            // Generate and download spotify playlists
-            Console.WriteLine("Generating spotify playlists...\n");
-            var playlists = await SpotifyTest.GenerateBeatSaberPlaylists(SpotifyPlaylistUrls);
-            Console.WriteLine("Spotify Playlist Generation Complete.\n\n");
-            
-            foreach (BPList bpList in playlists)
-            {
-                // Download map data and trigger async map file downloads
-                foreach (Song song in bpList.songs) 
-                    mapRequestManager.RequestMapDataAsync(song);
-            }
-            
+            await GenerateBsPlaylistsFromSpotify(mapRequestManager);
+            //DownloadBeatSaverPlaylists(mapRequestManager);
 
-            Console.WriteLine("Downloading BeatSaver playlists...\n");
-            // Download beatsaver playlists
-            foreach (int playlistId in PlaylistIds)
-            {
-                // Download Playlist
-                BPList bpList = mapRequestManager.RequestPlaylist(playlistId, out string playlistPath);
-                if(bpList == null)
-                    continue;
-                
-                Console.WriteLine("Saved Playlist: " + playlistPath);
-                Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
-
-                // Download map data and trigger async map file downloads
-                foreach (Song song in bpList.songs) 
-                    mapRequestManager.RequestMapDataAsync(song);
-            }
-            
             Stopwatch timer = Stopwatch.StartNew();
 
             while (timer.Elapsed.TotalSeconds < 10 && (mapRequestManager.mapDataLeftToDownload >0 || mapRequestManager.zipFilesLeftToDownload > 0))
@@ -72,6 +46,40 @@ namespace BeatSaberUnzipper
             FileManager.ExportMaps(mapRequestManager.mapFoldersToOutput);
             
             Console.WriteLine($"Finished Map and Playlist export. Total program runtime: {overallTimer.Elapsed.TotalSeconds} seconds");
+        }
+
+        private static async Task GenerateBsPlaylistsFromSpotify(MapRequestManager mapRequestManager)
+        {
+            Console.WriteLine("Generating spotify playlists...\n");
+            var playlists = await SpotifyTest.GenerateBeatSaberPlaylists(SpotifyPlaylistUrls);
+            Console.WriteLine("Spotify Playlist Generation Complete.\n\n");
+            
+            foreach (BPList bpList in playlists)
+            {
+                // Download map data and trigger async map file downloads
+                foreach (Song song in bpList.songs) 
+                    mapRequestManager.RequestMapDataAsync(song);
+            }
+        }
+        
+        private static void DownloadBeatSaverPlaylists(MapRequestManager mapRequestManager)
+        {
+            Console.WriteLine("Downloading BeatSaver playlists...");
+            // Download beatsaver playlists
+            foreach (int playlistId in PlaylistIds)
+            {
+                // Download Playlist
+                BPList bpList = mapRequestManager.RequestPlaylist(playlistId, out string playlistPath);
+                if (bpList == null)
+                    continue;
+                
+                Console.WriteLine("\n\nSaved Playlist: " + playlistPath);
+                Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
+
+                // Download map data and trigger async map file downloads
+                foreach (Song song in bpList.songs)
+                    mapRequestManager.RequestMapDataAsync(song);
+            }
         }
     }
 }
