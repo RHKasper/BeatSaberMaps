@@ -34,8 +34,6 @@ namespace BeatSaberUnzipper
 					string base64Image = ImageEncoderDecoder.Base64Encode(playlistImagePath);
 					string base64ImagePath = Path.ChangeExtension(playlistImagePath, ".txt");
 					await File.WriteAllTextAsync(base64ImagePath, base64Image);
-
-					// todo: potentially resize image to make it smol
 					
 					// Generate Beatsaber BPList 
 					BPList bpList = new BPList
