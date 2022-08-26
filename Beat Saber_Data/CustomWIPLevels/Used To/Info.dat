@@ -1,0 +1,39 @@
+{
+  "_version" : "2.0.0",
+  "_songName" : "Used To",
+  "_songSubName" : "",
+  "_songAuthorName" : "Hogland",
+  "_levelAuthorName" : "CombinationLost",
+  "_beatsPerMinute" : 100,
+  "_previewStartTime" : 50,
+  "_previewDuration" : 20,
+  "_songTimeOffset" : 0,
+  "_shuffle" : 0,
+  "_shufflePeriod" : 0.5,
+  "_coverImageFilename" : "cover.png",
+  "_songFilename" : "song.ogg",
+  "_environmentName" : "DefaultEnvironment",
+  "_allDirectionsEnvironmentName" : "GlassDesertEnvironment",
+  "_customData" : {
+    "_editors" : {
+      "_lastEditedBy" : "ChroMapper",
+      "ChroMapper" : {
+        "version" : "0.8.454"
+      }
+    }
+  },
+  "_difficultyBeatmapSets" : [
+    {
+      "_beatmapCharacteristicName" : "Standard",
+      "_difficultyBeatmaps" : [
+        {
+          "_difficulty" : "Normal",
+          "_difficultyRank" : 3,
+          "_beatmapFilename" : "NormalStandard.dat",
+          "_noteJumpMovementSpeed" : 16,
+          "_noteJumpStartBeatOffset" : 0
+        }
+      ]
+    }
+  ]
+}
