@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using BeatSaberUnzipper.MapEvaluation;
 using Newtonsoft.Json;
 using SpotifyAPI.Web;
 using Swan;
@@ -56,67 +57,11 @@ namespace BeatSaberUnzipper
 					searchQuery.docs.Remove(doc);
 				else if (version.HasTooManyParityErrors())
 					searchQuery.docs.Remove(doc);
-				
-				// Remove maps that don't contain the song name or the artist name
-				else if (!ContainsSongOrArtistName(doc, fullTrack))
+				else if (!doc.ContainsArtistName(fullTrack))
 					searchQuery.docs.Remove(doc);
 			}
 
-			searchQuery.docs.Sort(((doc, doc1) => Math.Sign(doc1.stats.score - doc.stats.score)));
-			
-			// foreach (Doc doc in searchQuery.docs)
-			// {
-			// 	Version version = doc.GetLatestVersion();
-			// 	Console.WriteLine($"{doc.name} =====  Score: {doc.stats.score}; Downvotes: {doc.stats.downvotes}; DiffStats: [{string.Join(',', version.diffs.Select(d=>d.difficulty))}]");
-			// }
-			
-			return searchQuery.docs.First();
-		}
-
-		private static bool ContainsSongOrArtistName(Doc doc, FullTrack fullTrack)
-		{
-			string[] trackNameWords = FilterToJustAlphaNumerics(fullTrack.Name).Split(' ');
-			string[] artistNameWords = FilterToJustAlphaNumerics(fullTrack.Artists.First().Name).Split(' ');
-
-			int trackNameWordsFound = FindWordsInMapName(trackNameWords, doc);
-			//Console.WriteLine($"Found {trackNameWordsFound} out of {trackNameWords.Length} track name words");
-			
-			int artistNameWordsFound = FindWordsInMapName(artistNameWords, doc);
-			//Console.WriteLine($"Found {artistNameWordsFound} out of {artistNameWords.Length} artist name words");
-
-			bool containsTrackName = trackNameWordsFound > .6f * trackNameWords.Length;
-			bool containsArtistName = artistNameWordsFound > .6f * artistNameWords.Length;
-
-			return containsArtistName || containsTrackName;
-		}
-
-		private static string FilterToJustAlphaNumerics(string str)
-		{
-			string result = "";
-			foreach (char c in str)
-			{
-				if (char.IsLetterOrDigit(c))
-					result += c;
-				else
-					result += ' ';
-			}
-
-			return result;
-		}
-
-		private static int FindWordsInMapName(string[] words, Doc doc)
-		{
-			int wordsFound = 0;
-			foreach (string word in words)
-			{
-				if (doc.name.Contains(word, StringComparison.CurrentCultureIgnoreCase))
-				{
-					wordsFound++;
-					//Console.WriteLine($"Found \"{word}\" in \"{doc.name}\"");
-				}
-			}
-
-			return wordsFound;
+			return searchQuery.docs.Most(doc => doc.ScoreOverall(fullTrack));
 		}
 	}
 

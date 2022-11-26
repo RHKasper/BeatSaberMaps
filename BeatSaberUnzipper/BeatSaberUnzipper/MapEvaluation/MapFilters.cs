@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using SpotifyAPI.Web;
 
-namespace BeatSaberUnzipper
+namespace BeatSaberUnzipper.MapEvaluation
 {
 	public static class MapFilters
 	{
@@ -36,6 +38,13 @@ namespace BeatSaberUnzipper
 			return false;
 		}
 
+		public static bool ContainsArtistName(this Doc doc, FullTrack fullTrack)
+		{
+			string[] artistNameWords = MapEvalUtils.FilterToJustAlphaNumerics(fullTrack.Artists.First().Name).Split(' ');
+			int artistNameWordsFound = doc.FindWordsInMapName(artistNameWords);
+			bool containsArtistName = artistNameWordsFound > .7f * artistNameWords.Length;
 
+			return containsArtistName;
+		}
 	}
 }

@@ -18,7 +18,8 @@ namespace BeatSaberUnzipper
         private static readonly string[] SpotifyPlaylistUrls =
         {
             //SpotifyPlaylists.AllLikes,
-            SpotifyPlaylists.ProgressiveHouseMix
+            SpotifyPlaylists.ProgressiveHouseMix,
+            SpotifyPlaylists.EdmBangers,
         };
         
         
