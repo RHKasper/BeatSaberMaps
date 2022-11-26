@@ -16,6 +16,11 @@ namespace BeatSaberUnzipper.MapEvaluation
 			}
 			return false;
 		}
+
+		public static bool NpsIsTooHigh(this Version version, float maxNps = 5f)
+		{
+			return version.diffs.All(d => d.nps > maxNps);
+		}
 		
 		public static bool IsPoorlyRatedBigMap(this Doc doc, float minRating = .8f, int minDownvotes = 5)
 		{

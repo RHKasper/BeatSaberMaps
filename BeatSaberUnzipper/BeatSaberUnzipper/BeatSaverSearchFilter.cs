@@ -50,15 +50,16 @@ namespace BeatSaberUnzipper
 			{
 				Doc doc = searchQuery.docs[i];
 				Version version = doc.GetLatestVersion();
-				
-				if (!version.HasAnyOfRequestedDifficulties(searchConfig.AcceptableDifficulties))
+
+				if (!version.HasAnyOfRequestedDifficulties(searchConfig.AcceptableDifficulties) ||
+				    doc.IsPoorlyRatedBigMap() ||
+				    doc.IsPoorlyRatedSmallMap() ||
+				    version.HasTooManyParityErrors() ||
+				    version.NpsIsTooHigh() ||
+				    !doc.ContainsArtistName(fullTrack))
+				{
 					searchQuery.docs.Remove(doc);
-				else if (doc.IsPoorlyRatedBigMap() || doc.IsPoorlyRatedSmallMap())
-					searchQuery.docs.Remove(doc);
-				else if (version.HasTooManyParityErrors())
-					searchQuery.docs.Remove(doc);
-				else if (!doc.ContainsArtistName(fullTrack))
-					searchQuery.docs.Remove(doc);
+				}
 			}
 
 			return searchQuery.docs.Most(doc => doc.ScoreOverall(fullTrack));
