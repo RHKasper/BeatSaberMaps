@@ -52,16 +52,11 @@ namespace BeatSaberUnzipper
 				Doc doc = searchQuery.docs[i];
 				Version version = doc.GetLatestVersion();
 				
-				// Remove maps that don't have the desired difficulties
-				if (!version.diffs.Any(diff => searchConfig.AcceptableDifficulties.Any(a => a == diff.difficulty)))
+				if (!version.HasAnyOfRequestedDifficulties(searchConfig.AcceptableDifficulties))
 					searchQuery.docs.Remove(doc);
-				
-				// Remove maps with low ratings and many downvotes
-				else if (doc.stats.score <= searchConfig.MinRatingForSmallMaps || (doc.stats.score <= searchConfig.MinRating && doc.stats.downvotes > searchConfig.MaxDownvotes))
+				else if (doc.IsPoorlyRatedBigMap() || doc.IsPoorlyRatedSmallMap())
 					searchQuery.docs.Remove(doc);
-				
-				// Remove maps with tons of parity errors in Hard+ difficulties
-				else if (version.diffs.Where(d=> d.difficulty != Diff.Normal && d.difficulty != Diff.Easy).Any(d => d.paritySummary.errors > searchConfig.MaxParityErrors))
+				else if (version.HasTooManyParityErrors())
 					searchQuery.docs.Remove(doc);
 				
 				// Remove maps that don't contain the song name or the artist name

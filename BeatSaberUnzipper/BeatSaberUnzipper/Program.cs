@@ -17,12 +17,8 @@ namespace BeatSaberUnzipper
         };
         private static readonly string[] SpotifyPlaylistUrls =
         {
-            SpotifyPlaylists.AllLikes,
-            SpotifyPlaylists.Euphoria,
-            SpotifyPlaylists.LongtermFavorites, 
-            SpotifyPlaylists.JeanPossibleBeatsabers,
-            SpotifyPlaylists.EdmForJean,
-            SpotifyPlaylists.BeatsaberBarbara,
+            //SpotifyPlaylists.AllLikes,
+            SpotifyPlaylists.ProgressiveHouseMix
         };
         
         
@@ -34,7 +30,7 @@ namespace BeatSaberUnzipper
             FileManager.ClearImagesCache();
             
             await GenerateBsPlaylistsFromSpotify(mapRequestManager);
-            DownloadBeatSaverPlaylists(mapRequestManager);
+            //DownloadBeatSaverPlaylists(mapRequestManager);
 
             Stopwatch timer = Stopwatch.StartNew();
 
