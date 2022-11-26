@@ -15,7 +15,7 @@ namespace BeatSaberUnzipper
 			return false;
 		}
 		
-		public static bool IsPoorlyRatedBigMap(this Doc doc, float minRating = .83f, int minDownvotes = 5)
+		public static bool IsPoorlyRatedBigMap(this Doc doc, float minRating = .8f, int minDownvotes = 5)
 		{
 			return doc.stats.downvotes > minDownvotes && doc.stats.score < minRating;
 		}

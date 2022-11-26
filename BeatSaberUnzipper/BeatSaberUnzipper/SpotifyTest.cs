@@ -62,12 +62,13 @@ namespace BeatSaberUnzipper
 							};
 
 							Doc desiredMap = BeatSaverSearchFilter.SearchForTrack(searchConfig);
-							string trackTitle = $"{fullTrack.Name} (by {fullTrack.Artists[0].Name})";
-							string mapTitle = $"{(desiredMap == default ? NullLabel : desiredMap.name)}";
-							Console.WriteLine($"{trackTitle} ========== {mapTitle}");
-
+							
 							if (desiredMap != null)
 							{
+								Console.WriteLine($"\nTrack Found For: {fullTrack.Name} ({string.Join(", ", fullTrack.Artists.Select(a=>a.Name))}):");
+								Console.WriteLine($"\t{desiredMap.name}");
+
+								
 								Version version = desiredMap.versions.First();
 								bpList.songs.Add(new Song
 								{

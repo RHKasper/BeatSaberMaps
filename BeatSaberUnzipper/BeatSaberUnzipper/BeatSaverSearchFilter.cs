@@ -45,8 +45,6 @@ namespace BeatSaberUnzipper
 		
 		public static Doc GetBestMap(FullTrack fullTrack, SearchQuery searchQuery, SearchConfig searchConfig)
 		{
-			Console.WriteLine($"\n\nSearch results for: {fullTrack.Name} ({string.Join(", ", fullTrack.Artists.Select(a=>a.Name))})");
-
 			for (int i = searchQuery.docs.Count - 1; i >= 0; i--)
 			{
 				Doc doc = searchQuery.docs[i];
@@ -66,11 +64,11 @@ namespace BeatSaberUnzipper
 
 			searchQuery.docs.Sort(((doc, doc1) => Math.Sign(doc1.stats.score - doc.stats.score)));
 			
-			foreach (Doc doc in searchQuery.docs)
-			{
-				Version version = doc.GetLatestVersion();
-				Console.WriteLine($"{doc.name} =====  Score: {doc.stats.score}; Downvotes: {doc.stats.downvotes}; DiffStats: [{string.Join(',', version.diffs.Select(d=>d.difficulty))}]");
-			}
+			// foreach (Doc doc in searchQuery.docs)
+			// {
+			// 	Version version = doc.GetLatestVersion();
+			// 	Console.WriteLine($"{doc.name} =====  Score: {doc.stats.score}; Downvotes: {doc.stats.downvotes}; DiffStats: [{string.Join(',', version.diffs.Select(d=>d.difficulty))}]");
+			// }
 			
 			return searchQuery.docs.First();
 		}
@@ -81,10 +79,10 @@ namespace BeatSaberUnzipper
 			string[] artistNameWords = FilterToJustAlphaNumerics(fullTrack.Artists.First().Name).Split(' ');
 
 			int trackNameWordsFound = FindWordsInMapName(trackNameWords, doc);
-			Console.WriteLine($"Found {trackNameWordsFound} out of {trackNameWords.Length} track name words");
+			//Console.WriteLine($"Found {trackNameWordsFound} out of {trackNameWords.Length} track name words");
 			
 			int artistNameWordsFound = FindWordsInMapName(artistNameWords, doc);
-			Console.WriteLine($"Found {artistNameWordsFound} out of {artistNameWords.Length} artist name words");
+			//Console.WriteLine($"Found {artistNameWordsFound} out of {artistNameWords.Length} artist name words");
 
 			bool containsTrackName = trackNameWordsFound > .6f * trackNameWords.Length;
 			bool containsArtistName = artistNameWordsFound > .6f * artistNameWords.Length;
