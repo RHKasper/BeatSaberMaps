@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,9 +18,18 @@ namespace BeatSaberUnzipper
         };
         private static readonly string[] SpotifyPlaylistUrls =
         {
-            //SpotifyPlaylists.AllLikes,
-            SpotifyPlaylists.EdmBangers,
             SpotifyPlaylists.ProgressiveHouseMix,
+            SpotifyPlaylists.MelodicDubstepMix,
+            SpotifyPlaylists.FutureBassMix,
+            SpotifyPlaylists.DancePopMix,
+            SpotifyPlaylists.PopMix,
+            SpotifyPlaylists.HypeEdmMix,
+            SpotifyPlaylists.PopEdmMix,
+            SpotifyPlaylists.AllLikes,
+            SpotifyPlaylists.RunningEdmMix,
+            SpotifyPlaylists.ChillEdmMix,
+            SpotifyPlaylists.EdmBangers,
+            SpotifyPlaylists.EpicMix
         };
         
         
@@ -31,7 +41,7 @@ namespace BeatSaberUnzipper
             FileManager.ClearImagesCache();
             
             await GenerateBsPlaylistsFromSpotify(mapRequestManager);
-            //DownloadBeatSaverPlaylists(mapRequestManager);
+            DownloadBeatSaverPlaylists(mapRequestManager);
 
             Stopwatch timer = Stopwatch.StartNew();
 
@@ -57,7 +67,7 @@ namespace BeatSaberUnzipper
             Console.WriteLine("Generating spotify playlists...\n");
             var playlists = await SpotifyTest.GenerateBeatSaberPlaylists(SpotifyPlaylistUrls);
             Console.WriteLine("Spotify Playlist Generation Complete.\n\n");
-            
+
             foreach (BPList bpList in playlists)
             {
                 // Download map data and trigger async map file downloads

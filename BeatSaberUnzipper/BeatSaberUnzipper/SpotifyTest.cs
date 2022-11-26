@@ -96,6 +96,15 @@ namespace BeatSaberUnzipper
 				}
 			}
 
+			
+			BPList aggregateSpotifyPlaylist = new BPList()
+			{
+				playlistTitle = "Spotify Aggregate Playlist",
+				songs = generatedPlaylists.SelectMany(p => p.songs).ToList()
+			};
+			
+			generatedPlaylists.Add(aggregateSpotifyPlaylist);
+			
 			return generatedPlaylists;
 		}
 
