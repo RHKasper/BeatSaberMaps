@@ -18,6 +18,9 @@ namespace BeatSaberUnzipper
         };
         private static readonly string[] SpotifyPlaylistUrls =
         {
+            SpotifyPlaylists.AllLikes,
+            SpotifyPlaylists.EdmBangers,
+            
             SpotifyPlaylists.ProgressiveHouseMix,
             SpotifyPlaylists.MelodicDubstepMix,
             SpotifyPlaylists.FutureBassMix,
@@ -25,11 +28,22 @@ namespace BeatSaberUnzipper
             SpotifyPlaylists.PopMix,
             SpotifyPlaylists.HypeEdmMix,
             SpotifyPlaylists.PopEdmMix,
-            SpotifyPlaylists.AllLikes,
             SpotifyPlaylists.RunningEdmMix,
             SpotifyPlaylists.ChillEdmMix,
-            SpotifyPlaylists.EdmBangers,
-            SpotifyPlaylists.EpicMix
+            SpotifyPlaylists.EpicMix,
+            SpotifyPlaylists.StompAndHollerMix,
+            
+            SpotifyPlaylists.RobertsEpicMix,
+            SpotifyPlaylists.RobertsRunningEdmMix,
+            SpotifyPlaylists.RobertsHypeEdmMix,
+            SpotifyPlaylists.RobertsPopEdmMix,
+            SpotifyPlaylists.RobertsDancePopMix,
+            SpotifyPlaylists.RobertsPopMix,
+            SpotifyPlaylists.RobertsMelodicDubStepMix,
+            SpotifyPlaylists.RobertsFutureBaseMix,
+            SpotifyPlaylists.RobertsEdmMix,
+            SpotifyPlaylists.RobertsProgressiveHouseMix,
+            SpotifyPlaylists.RobertsStompAndHollerMix,
         };
         
         
