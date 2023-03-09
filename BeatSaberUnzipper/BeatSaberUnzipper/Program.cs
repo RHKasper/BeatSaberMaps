@@ -43,6 +43,7 @@ namespace BeatSaberUnzipper
             SpotifyPlaylists.RobertsFutureBaseMix,
             SpotifyPlaylists.RobertsEdmMix,
             SpotifyPlaylists.RobertsProgressiveHouseMix,
+            SpotifyPlaylists.RobertsRockMix,
             SpotifyPlaylists.RobertsStompAndHollerMix,
         };
         

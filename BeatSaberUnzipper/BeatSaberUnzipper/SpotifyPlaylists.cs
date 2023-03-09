@@ -29,6 +29,7 @@
 		public const string RobertsFutureBaseMix = "https://open.spotify.com/playlist/5T3FsS3ObTRXrLPWzt8DBJ?si=f9c37f8bfc4647b5";
 		public const string RobertsEdmMix = "https://open.spotify.com/playlist/5tY88XWKaUArUISNkY697j?si=3afb235dac594189";
 		public const string RobertsProgressiveHouseMix = "https://open.spotify.com/playlist/596eg391cQdq8Ncgg7P3zX?si=689320a7b54c40fa";
+		public const string RobertsRockMix = "https://open.spotify.com/playlist/43jMBPZVR5cdD7Cw1gZF8j?si=9a990d1647eb4cde";
 		public const string RobertsStompAndHollerMix = "https://open.spotify.com/playlist/166oYqVyj3isKhxDVL4Yvh?si=7426280a7f494519";
 		
 		
