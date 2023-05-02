@@ -20,7 +20,6 @@
 		
 		// Robert's Genre Playlists
 		public const string RobertsEpicMix = "https://open.spotify.com/playlist/6QTGBDOzjxnkfQ9X6OmWIY?si=9d82829900c84462";
-		public const string RobertsRunningEdmMix = "https://open.spotify.com/playlist/50k6I8MoOia8t1l3OSuNiz?si=5c22e5f33a1145d6";
 		public const string RobertsHypeEdmMix = "https://open.spotify.com/playlist/4qQnqf4YoCkEseGpitLdhS?si=9a366c3d06294f79";
 		public const string RobertsPopEdmMix = "https://open.spotify.com/playlist/2NPIzd4M12NwX4A7QgtALG?si=1fd217d727064c2d";
 		public const string RobertsDancePopMix = "https://open.spotify.com/playlist/1cEFoPuY2hv7EaajKAN5Sf?si=e68eebfd15d841b8";
@@ -28,9 +27,11 @@
 		public const string RobertsMelodicDubStepMix = "https://open.spotify.com/playlist/6w3lveNxWDp2Q8vfic7t7l?si=7e7d920e0792483f";
 		public const string RobertsFutureBaseMix = "https://open.spotify.com/playlist/5T3FsS3ObTRXrLPWzt8DBJ?si=f9c37f8bfc4647b5";
 		public const string RobertsEdmMix = "https://open.spotify.com/playlist/5tY88XWKaUArUISNkY697j?si=3afb235dac594189";
-		public const string RobertsProgressiveHouseMix = "https://open.spotify.com/playlist/596eg391cQdq8Ncgg7P3zX?si=689320a7b54c40fa";
 		public const string RobertsRockMix = "https://open.spotify.com/playlist/43jMBPZVR5cdD7Cw1gZF8j?si=9a990d1647eb4cde";
 		public const string RobertsStompAndHollerMix = "https://open.spotify.com/playlist/166oYqVyj3isKhxDVL4Yvh?si=7426280a7f494519";
+		public const string RobertsComplextroMix = "https://open.spotify.com/playlist/2zy1zeDtgDVv0KVXktcfUL?si=18be21a56aec469b";
+		public const string RobertsPopPunkMix = "https://open.spotify.com/playlist/3FvjM4Gpv3Gd11p7vpmxSR?si=5178d3f5556041ee";
+		public const string RobertsElectroHouseMix = "https://open.spotify.com/playlist/08TC1SBllooOpYN0S4rnNh?si=78f4c54a0e514cf9";
 		
 		
 		

@@ -19,7 +19,8 @@ namespace BeatSaberUnzipper
 		{
 			SpotifyClient spotify = await CreateClient();
 			List<BPList> generatedPlaylists = new List<BPList>();
-			
+			List<PlaylistSearchResults> results = new List<PlaylistSearchResults>();
+
 			foreach (string playlistUrl in spotifyPlaylistUrls)
 			{
 				try
@@ -82,8 +83,8 @@ namespace BeatSaberUnzipper
 					}
 
 					bpList.RemoveDuplicates();
-
-					Console.WriteLine($"\n{playlist.Name}: Found {foundTracks} out of {requestedTracks} ({((float)foundTracks/requestedTracks)*100}%)\n");
+					results.Add(new PlaylistSearchResults(playlist.Name, foundTracks, requestedTracks));
+					LogSearchResults(results.Last());
 
 					string json = JsonConvert.SerializeObject(bpList);
 					string playlistPath = Path.Combine(FileManager.PlaylistsCachePath, playlist.Name + ".bplist");
@@ -104,8 +105,18 @@ namespace BeatSaberUnzipper
 			};
 			
 			generatedPlaylists.Add(aggregateSpotifyPlaylist);
+
+			foreach (PlaylistSearchResults result in results)
+			{
+				LogSearchResults(result);
+			}
 			
 			return generatedPlaylists;
+		}
+
+		private static void LogSearchResults(PlaylistSearchResults results)
+		{
+			Console.WriteLine($"\n{results.name}: Found {results.found} out of {results.searchedFor} ({((float)results.found/results.searchedFor)*100}%)\n");
 		}
 
 		private static async Task<SpotifyClient> CreateClient()
@@ -130,5 +141,7 @@ namespace BeatSaberUnzipper
 			// Request Image		
 			return await BeatSaverDownloader.DownloadImageAsync(dir, filename, new Uri(imageUrl));
 		}
+
+		private record PlaylistSearchResults(string name, int found, int searchedFor);
 	}
 }

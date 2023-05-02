@@ -17,7 +17,7 @@ namespace BeatSaberUnzipper.MapEvaluation
 			return false;
 		}
 
-		public static bool NpsIsTooHigh(this Version version, float maxNps = 5f)
+		public static bool NpsIsTooHigh(this Version version, float maxNps = 5.5f)
 		{
 			return version.diffs.All(d => d.nps > maxNps);
 		}
