@@ -16,6 +16,12 @@ namespace BeatSaberUnzipper
             // BeatSaverPlaylists.TryOuts,
             // BeatSaverPlaylists.LadyLove,
         };
+
+        private static readonly int[] UserPlaylistIds =
+        {
+            BeatSaverUserPlaylists.Teuflum,
+        };
+        
         private static readonly string[] SpotifyPlaylistUrls =
         {
             // SpotifyPlaylists.AllLikes,
@@ -56,8 +62,9 @@ namespace BeatSaberUnzipper
             FileManager.ClearPlaylistsCache();
             FileManager.ClearImagesCache();
             
-            await GenerateBsPlaylistsFromSpotify(mapRequestManager);
-            DownloadBeatSaverPlaylists(mapRequestManager);
+            // await GenerateBsPlaylistsFromSpotify(mapRequestManager);
+            DownloadBeatSaverUserPlaylists(mapRequestManager);
+            //DownloadBeatSaverPlaylists(mapRequestManager);
 
             Stopwatch timer = Stopwatch.StartNew();
 
@@ -104,6 +111,26 @@ namespace BeatSaberUnzipper
                     continue;
                 
                 Console.WriteLine("\n\nSaved Playlist: " + playlistPath);
+                Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
+
+                // Download map data and trigger async map file downloads
+                foreach (Song song in bpList.songs)
+                    mapRequestManager.RequestMapDataAsync(song);
+            }
+        }
+        
+        private static void DownloadBeatSaverUserPlaylists(MapRequestManager mapRequestManager)
+        {
+            Console.WriteLine("Downloading BeatSaver User playlists...");
+
+            foreach (int userId in UserPlaylistIds)
+            {
+                // Download Playlist
+                BPList bpList = mapRequestManager.RequestUserPlaylist(userId, out string playlistPath);
+                if (bpList == null)
+                    continue;
+                
+                Console.WriteLine("\n\nSaved User Playlist: " + playlistPath);
                 Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
 
                 // Download map data and trigger async map file downloads

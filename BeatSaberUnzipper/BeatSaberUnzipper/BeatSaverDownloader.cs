@@ -31,6 +31,21 @@ namespace BeatSaberUnzipper
                 return null;
             }
         }
+        
+        public static BPList GetUserBpList(int userID, out string fileContents)
+        { 
+            try
+            {
+                string uri = "https://api.beatsaver.com/users/id/" + userID + "/playlist";
+                fileContents = Get(uri);
+                return JsonConvert.DeserializeObject<BPList>(fileContents);
+            }
+            catch (TimeoutException)
+            {
+                fileContents = default;
+                return null;
+            }
+        }
 
         /// <summary>
         /// download a zip file from <see cref="uri"/> to <see cref="outFilePath"/>.
