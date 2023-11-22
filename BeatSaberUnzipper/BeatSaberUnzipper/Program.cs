@@ -20,7 +20,7 @@ namespace BeatSaberUnzipper
         private static readonly int[] UserPlaylistIds =
         {
             BeatSaverUserPlaylists.Teuflum,
-            BeatSaverUserPlaylists.xScaramouche,
+            BeatSaverUserPlaylists.NixieKorten,
             BeatSaverUserPlaylists.Scarladore,
             BeatSaverUserPlaylists.ZaneSaber,
             BeatSaverUserPlaylists.TheCzar1994,
