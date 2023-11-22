@@ -24,6 +24,7 @@ namespace BeatSaberUnzipper
             BeatSaverUserPlaylists.Scarladore,
             BeatSaverUserPlaylists.ZaneSaber,
             BeatSaverUserPlaylists.TheCzar1994,
+            BeatSaverUserPlaylists.Halcyon12,
         };
         
         private static readonly string[] SpotifyPlaylistUrls =
