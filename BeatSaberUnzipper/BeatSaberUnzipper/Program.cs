@@ -12,16 +12,12 @@ namespace BeatSaberUnzipper
         {
             BeatSaverPlaylists.Favorites,
             BeatSaverPlaylists.Aspirational,
-            BeatSaverPlaylists.SolidMaps,
-            BeatSaverPlaylists.TryOuts,
-            BeatSaverPlaylists.LadyLove,
         };
 
         private static readonly int[] UserPlaylistIds =
         {
             BeatSaverUserPlaylists.Teuflum,
             BeatSaverUserPlaylists.NixieKorten,
-            BeatSaverUserPlaylists.Scarladore,
             BeatSaverUserPlaylists.ZaneSaber,
             BeatSaverUserPlaylists.TheCzar1994,
             BeatSaverUserPlaylists.Halcyon12,
@@ -31,9 +27,7 @@ namespace BeatSaberUnzipper
         {
             SpotifyPlaylists.AllLikes,
             SpotifyPlaylists.RobertsEpicMix,
-            SpotifyPlaylists.RobertsDancePopMix,
             SpotifyPlaylists.RobertsPopMix,
-            SpotifyPlaylists.RobertsMelodicDubStepMix,
             SpotifyPlaylists.RobertsEdmMix,
             SpotifyPlaylists.RobertsRockMix,
         };
