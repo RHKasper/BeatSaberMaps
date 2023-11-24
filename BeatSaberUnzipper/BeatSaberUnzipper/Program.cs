@@ -30,7 +30,6 @@ namespace BeatSaberUnzipper
         private static readonly string[] SpotifyPlaylistUrls =
         {
             SpotifyPlaylists.AllLikes,
-            SpotifyPlaylists.EdmBangers,
             SpotifyPlaylists.RobertsEpicMix,
             SpotifyPlaylists.RobertsDancePopMix,
             SpotifyPlaylists.RobertsPopMix,
