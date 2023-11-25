@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,6 +7,11 @@ namespace BeatSaberUnzipper
 {
     class Program
     {
+        private static readonly string[] PlaylistURLs =
+        {
+            UrlPlaylists.AlphabeatPixelTerror
+        };
+        
         private static readonly int[] PlaylistIds =
         {
             BeatSaverPlaylists.Favorites,
@@ -44,6 +48,7 @@ namespace BeatSaberUnzipper
             await GenerateBsPlaylistsFromSpotify(mapRequestManager);
             DownloadBeatSaverUserPlaylists(mapRequestManager);
             DownloadBeatSaverPlaylists(mapRequestManager);
+            DownloadWebPlaylists(mapRequestManager);
 
             Stopwatch timer = Stopwatch.StartNew();
 
@@ -63,7 +68,7 @@ namespace BeatSaberUnzipper
             
             Console.WriteLine($"Finished Map and Playlist export. Total program runtime: {overallTimer.Elapsed.TotalSeconds} seconds");
         }
-
+        
         private static async Task GenerateBsPlaylistsFromSpotify(MapRequestManager mapRequestManager)
         {
             Console.WriteLine("Generating spotify playlists...\n");
@@ -110,6 +115,26 @@ namespace BeatSaberUnzipper
                     continue;
                 
                 Console.WriteLine("\n\nSaved User Playlist: " + playlistPath);
+                Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
+
+                // Download map data and trigger async map file downloads
+                foreach (Song song in bpList.songs)
+                    mapRequestManager.RequestMapDataAsync(song);
+            }
+        }
+        
+        private static void DownloadWebPlaylists(MapRequestManager mapRequestManager)
+        {
+            Console.WriteLine("Downloading Web URL Playlists...");
+            
+            foreach (string url in PlaylistURLs)
+            {
+                // Download Playlist
+                BPList bpList = mapRequestManager.RequestPlaylist(url, out string playlistPath);
+                if (bpList == null)
+                    continue;
+                
+                Console.WriteLine("\n\nSaved Web Playlist: " + playlistPath);
                 Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
 
                 // Download map data and trigger async map file downloads

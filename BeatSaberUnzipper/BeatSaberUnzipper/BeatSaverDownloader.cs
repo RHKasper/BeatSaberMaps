@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using SpotifyAPI.Web;
 
 namespace BeatSaberUnzipper
 {
@@ -16,13 +13,11 @@ namespace BeatSaberUnzipper
     {
         public const float DownloadTimeOutDuration = 5;
 
-
-        public static BPList GetBpList(int id, out string fileContents)
+        public static BPList GetBpList(string url, out string fileContents)
         {
             try
             {
-                string uri = "https://api.beatsaver.com/playlists/id/" + id + "/download";
-                fileContents = Get(uri);
+                fileContents = Get(url);
                 return JsonConvert.DeserializeObject<BPList>(fileContents);
             }
             catch (TimeoutException)
@@ -32,19 +27,16 @@ namespace BeatSaberUnzipper
             }
         }
         
-        public static BPList GetUserBpList(int userID, out string fileContents)
+        public static BPList GetBpList(int id, out string fileContents)
+        {
+            var uri = "https://api.beatsaver.com/playlists/id/" + id + "/download";
+            return GetBpList(uri, out fileContents);
+        }
+        
+        public static BPList GetUserBpList(int userId, out string fileContents)
         { 
-            try
-            {
-                string uri = "https://api.beatsaver.com/users/id/" + userID + "/playlist";
-                fileContents = Get(uri);
-                return JsonConvert.DeserializeObject<BPList>(fileContents);
-            }
-            catch (TimeoutException)
-            {
-                fileContents = default;
-                return null;
-            }
+            string uri = "https://api.beatsaver.com/users/id/" + userId + "/playlist";
+            return GetBpList(uri, out fileContents);
         }
 
         /// <summary>

@@ -143,6 +143,27 @@ namespace BeatSaberUnzipper
 			File.WriteAllText(filePath, fileContents);
 			return bpList;
 		}
+		
+		/// <summary>
+		/// Download playlist file synchronously
+		/// </summary>
+		/// <returns></returns>
+		public BPList RequestPlaylist(string url, out string filePath)
+		{
+			//download playlist file
+			BPList bpList = BeatSaverDownloader.GetBpList(url, out string fileContents);
+			if (bpList == null)
+			{
+				Console.WriteLine($"playlist {url} could not be downloaded or read");
+				filePath = default;
+				return null;
+			}
+            
+			// save playlist file contents
+			filePath = FileManager.GetPlaylistFilePath(bpList);
+			File.WriteAllText(filePath, fileContents);
+			return bpList;
+		}
 
 		private void EnqueueMapDataRequest(Song song) => mapDataRequestQueue.Enqueue(song);
 	}

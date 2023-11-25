@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using BeatSaberUnzipper.MapEvaluation;
 using Newtonsoft.Json;
 using SpotifyAPI.Web;
-using Swan;
 
 namespace BeatSaberUnzipper
 {
