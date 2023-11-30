@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,34 +8,36 @@ namespace BeatSaberUnzipper
 {
     class Program
     {
-        private static readonly string[] PlaylistURLs =
+        private static readonly Dictionary<string, string> PlaylistURLs = new()
         {
-            UrlPlaylists.AlphabeatPixelTerror
-        };
-        
-        private static readonly int[] PlaylistIds =
-        {
-            BeatSaverPlaylists.Favorites,
-            BeatSaverPlaylists.Aspirational,
+            { "Alphabeat PixelTerror", "https://bsaber.com/PlaylistAPI/21-07-01_pixel-terror-pack_alphabeat.bplist" }
         };
 
-        private static readonly int[] UserPlaylistIds =
+        private static readonly Dictionary<string, int> PlaylistIds = new()
         {
-            BeatSaverUserPlaylists.Teuflum,
-            BeatSaverUserPlaylists.NixieKorten,
-            BeatSaverUserPlaylists.ZaneSaber,
-            BeatSaverUserPlaylists.TheCzar1994,
-            BeatSaverUserPlaylists.Halcyon12,
-            BeatSaverUserPlaylists.Revelate,
+            { "Favorites", 7903 },
+            { "Aspirational", 7038 },
+            { "Ajr NeoTheater", 171573 },
+            { "Skillet", 85217 },
+        };
+
+        private static readonly Dictionary<string, int> UserPlaylistIds = new()
+        {
+            {"Teuflum", 68740},
+            {"ZaneSaber", 4284220},
+            {"TheCzar1994", 4285984},
+            {"NixieKorten - Electroswing mapper ", 4286374},
+            {"Halcyon12", 14808},
+            {"Revelate", 2768},
         };
         
-        private static readonly string[] SpotifyPlaylistUrls =
+        private static readonly Dictionary<string,string> SpotifyPlaylistUrls = new()
         {
-            SpotifyPlaylists.AllLikes,
-            SpotifyPlaylists.RobertsEpicMix,
-            SpotifyPlaylists.RobertsPopMix,
-            SpotifyPlaylists.RobertsEdmMix,
-            SpotifyPlaylists.RobertsRockMix,
+            {"All Likes", "https://open.spotify.com/playlist/5Zi1NzMK91ImLODGEWHNqS?si=bcde847d6766403f"},
+            {"Robert's Epic Mix", "https://open.spotify.com/playlist/6QTGBDOzjxnkfQ9X6OmWIY?si=9d82829900c84462"},
+            {"Robert's Pop Mix", "https://open.spotify.com/playlist/7vSZ2b4591qCZhi8bn2xkn?si=4a570e22013747fa"},
+            {"Robert's Edm Mix", "https://open.spotify.com/playlist/5tY88XWKaUArUISNkY697j?si=3afb235dac594189"},
+            {"Robert's Rock Mix", "https://open.spotify.com/playlist/43jMBPZVR5cdD7Cw1gZF8j?si=9a990d1647eb4cde"},
         };
         
         
@@ -72,7 +75,7 @@ namespace BeatSaberUnzipper
         private static async Task GenerateBsPlaylistsFromSpotify(MapRequestManager mapRequestManager)
         {
             Console.WriteLine("Generating spotify playlists...\n");
-            var playlists = await SpotifyTest.GenerateBeatSaberPlaylists(SpotifyPlaylistUrls);
+            var playlists = await SpotifyTest.GenerateBeatSaberPlaylists(SpotifyPlaylistUrls.Values);
             Console.WriteLine("Spotify Playlist Generation Complete.\n\n");
 
             foreach (BPList bpList in playlists)
@@ -87,7 +90,7 @@ namespace BeatSaberUnzipper
         {
             Console.WriteLine("Downloading BeatSaver playlists...");
             // Download beatsaver playlists
-            foreach (int playlistId in PlaylistIds)
+            foreach (int playlistId in PlaylistIds.Values)
             {
                 // Download Playlist
                 BPList bpList = mapRequestManager.RequestPlaylist(playlistId, out string playlistPath);
@@ -107,7 +110,7 @@ namespace BeatSaberUnzipper
         {
             Console.WriteLine("Downloading BeatSaver User playlists...");
 
-            foreach (int userId in UserPlaylistIds)
+            foreach (int userId in UserPlaylistIds.Values)
             {
                 // Download Playlist
                 BPList bpList = mapRequestManager.RequestUserPlaylist(userId, out string playlistPath);
@@ -127,7 +130,7 @@ namespace BeatSaberUnzipper
         {
             Console.WriteLine("Downloading Web URL Playlists...");
             
-            foreach (string url in PlaylistURLs)
+            foreach (string url in PlaylistURLs.Values)
             {
                 // Download Playlist
                 BPList bpList = mapRequestManager.RequestPlaylist(url, out string playlistPath);
