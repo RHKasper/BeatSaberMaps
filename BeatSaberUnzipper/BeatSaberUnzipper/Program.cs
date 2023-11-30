@@ -89,20 +89,11 @@ namespace BeatSaberUnzipper
         private static void DownloadBeatSaverPlaylists(MapRequestManager mapRequestManager)
         {
             Console.WriteLine("Downloading BeatSaver playlists...");
-            // Download beatsaver playlists
+
             foreach (int playlistId in PlaylistIds.Values)
             {
-                // Download Playlist
                 BPList bpList = mapRequestManager.RequestPlaylist(playlistId, out string playlistPath);
-                if (bpList == null)
-                    continue;
-                
-                Console.WriteLine("\n\nSaved Playlist: " + playlistPath);
-                Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
-
-                // Download map data and trigger async map file downloads
-                foreach (Song song in bpList.songs)
-                    mapRequestManager.RequestMapDataAsync(song);
+                RequestMaps(mapRequestManager, bpList, playlistPath);
             }
         }
         
@@ -112,38 +103,33 @@ namespace BeatSaberUnzipper
 
             foreach (int userId in UserPlaylistIds.Values)
             {
-                // Download Playlist
                 BPList bpList = mapRequestManager.RequestUserPlaylist(userId, out string playlistPath);
-                if (bpList == null)
-                    continue;
-                
-                Console.WriteLine("\n\nSaved User Playlist: " + playlistPath);
-                Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
-
-                // Download map data and trigger async map file downloads
-                foreach (Song song in bpList.songs)
-                    mapRequestManager.RequestMapDataAsync(song);
+                RequestMaps(mapRequestManager, bpList, playlistPath);
             }
         }
-        
+
         private static void DownloadWebPlaylists(MapRequestManager mapRequestManager)
         {
             Console.WriteLine("Downloading Web URL Playlists...");
             
             foreach (string url in PlaylistURLs.Values)
             {
-                // Download Playlist
                 BPList bpList = mapRequestManager.RequestPlaylist(url, out string playlistPath);
-                if (bpList == null)
-                    continue;
-                
-                Console.WriteLine("\n\nSaved Web Playlist: " + playlistPath);
-                Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
-
-                // Download map data and trigger async map file downloads
-                foreach (Song song in bpList.songs)
-                    mapRequestManager.RequestMapDataAsync(song);
+                RequestMaps(mapRequestManager, bpList, playlistPath);
             }
+        }
+
+        private static void RequestMaps(MapRequestManager mapRequestManager, BPList bpList, string playlistPath)
+        {
+            if (bpList == null)
+                return;
+
+            Console.WriteLine("\n\nSaved User Playlist: " + playlistPath);
+            Console.WriteLine("Requesting " + bpList.songs.Count + " maps...");
+
+            // Download map data and trigger async map file downloads
+            foreach (Song song in bpList.songs)
+                mapRequestManager.RequestMapDataAsync(song);
         }
     }
 }
