@@ -55,7 +55,7 @@ namespace BeatSaberUnzipper
 							SearchConfig searchConfig = new SearchConfig()
 							{
 								FullTrack = fullTrack,
-								AcceptableDifficulties = new[] { Diff.Normal, Diff.Hard, Diff.Expert },
+								AcceptableDifficulties = new[] { Diff.Hard, Diff.Expert, Diff.ExpertPlus },
 							};
 
 							Doc desiredMap = BeatSaverSearchFilter.SearchForTrack(searchConfig);

@@ -24,7 +24,6 @@ namespace BeatSaberUnzipper
         private static readonly Dictionary<string, int> UserPlaylistIds = new()
         {
             {"Teuflum", 68740},
-            {"ZaneSaber", 4284220},
             {"TheCzar1994", 4285984},
             {"NixieKorten - Electroswing mapper ", 4286374},
             {"Halcyon12", 14808},
