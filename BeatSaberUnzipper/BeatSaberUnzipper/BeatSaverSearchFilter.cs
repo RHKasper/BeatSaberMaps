@@ -49,12 +49,7 @@ namespace BeatSaberUnzipper
 				Doc doc = searchQuery.docs[i];
 				Version version = doc.GetLatestVersion();
 
-				if (!version.HasAnyOfRequestedDifficulties(searchConfig.AcceptableDifficulties) ||
-				    doc.IsPoorlyRatedBigMap() ||
-				    doc.IsPoorlyRatedSmallMap() ||
-				    version.HasTooManyParityErrors() ||
-				    version.NpsIsTooHigh() ||
-				    !doc.ContainsArtistName(fullTrack))
+				if (doc.FailsAnyQualityFilter() || !version.HasAnyOfRequestedDifficulties(searchConfig.AcceptableDifficulties) || !doc.ContainsArtistName(fullTrack))
 				{
 					searchQuery.docs.Remove(doc);
 				}
@@ -68,15 +63,5 @@ namespace BeatSaberUnzipper
 	{
 		public FullTrack FullTrack;
 		public string[] AcceptableDifficulties;
-		
-		/// <summary>
-		/// a track is excluded if it has less than <see cref="MinRating"/> AND fewer than <see cref="MaxDownvotes"/> downvotes
-		/// </summary>
-		public float MinRating = .8f; //0-1
-
-		public float MinRatingForSmallMaps = .7f;
-		public int MaxDownvotes = 5;
-
-		public int MaxParityErrors = 20;
 	}
 }

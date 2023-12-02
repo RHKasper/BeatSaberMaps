@@ -5,6 +5,12 @@ namespace BeatSaberUnzipper.MapEvaluation
 {
 	public static class MapFilters
 	{
+		public static bool FailsAnyQualityFilter(this Doc d)
+		{
+			Version v = d.GetLatestVersion();
+			return d.IsPoorlyRated() || v.HasTooManyParityErrors() || v.NpsIsTooHigh();
+		}
+		
 		public static bool HasTooManyParityErrors(this Version v, int maxParityErrors = 5)
 		{
 			foreach (Diff diff in v.diffs)
@@ -16,13 +22,24 @@ namespace BeatSaberUnzipper.MapEvaluation
 			return false;
 		}
 
-		public static bool NpsIsTooHigh(this Version version, float maxNps = 5.5f)
+		public static bool NpsIsTooHigh(this Version version, float maxNps = 6.5f)
 		{
 			return version.diffs.All(d => d.nps > maxNps);
+		}
+
+		public static bool IsPoorlyRated(this Doc doc)
+		{
+			bool hasManyRatings = doc.stats.upvotes + doc.stats.downvotes > 50;
+
+			if (hasManyRatings)
+				return doc.stats.score < .8f;
+			else
+				return doc.stats.score < .7f;
 		}
 		
 		public static bool IsPoorlyRatedBigMap(this Doc doc, float minRating = .8f, int minDownvotes = 5)
 		{
+			
 			return doc.stats.downvotes > minDownvotes && doc.stats.score < minRating;
 		}
 

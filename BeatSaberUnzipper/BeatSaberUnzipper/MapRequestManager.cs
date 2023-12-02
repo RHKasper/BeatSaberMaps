@@ -14,9 +14,6 @@ namespace BeatSaberUnzipper
 		private HashSet<string> mapDataRequested = new();
 		private HashSet<string> zipFilesRequested = new();
 
-		private Queue<Song> mapDataRequestQueue = new();
-
-		private int maxMapDataRequests = 10;
 		public bool PreventDownloads = false;
 
 		public MapRequestManager()
@@ -37,12 +34,7 @@ namespace BeatSaberUnzipper
 			}
 
 			// Throttle request rate so server doesn't get mad
-			Thread.Sleep(150);
-			if (mapDataLeftToDownload >= maxMapDataRequests)
-			{
-				EnqueueMapDataRequest(song);
-				return;
-			}
+			Thread.Sleep(100);
 			
 			// Request MapData
 			mapDataLeftToDownload++;
@@ -164,7 +156,5 @@ namespace BeatSaberUnzipper
 			File.WriteAllText(filePath, fileContents);
 			return bpList;
 		}
-
-		private void EnqueueMapDataRequest(Song song) => mapDataRequestQueue.Enqueue(song);
 	}
 }
