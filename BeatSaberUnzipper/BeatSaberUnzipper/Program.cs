@@ -10,11 +10,16 @@ namespace BeatSaberUnzipper
     {
         private static readonly Dictionary<string, string> PlaylistURLs = new()
         {
-            { "Alphabeat PixelTerror", "https://bsaber.com/PlaylistAPI/21-07-01_pixel-terror-pack_alphabeat.bplist" }
+            //{ "Alphabeat PixelTerror", "https://bsaber.com/PlaylistAPI/21-07-01_pixel-terror-pack_alphabeat.bplist" }
         };
 
         private static readonly Dictionary<string, int> PlaylistIds = new()
         {
+            { "Alphabeat - Pegboard Nerds Music Pack", 82},
+            { "Alphabeat - Marshmello Music Pack", 83},
+            { "Alphabeat - Pixel Terror Music Pack", 84},
+            { "Alphabeat - Monstercat Music Pack", 85},
+            
             { "Favorites", 7903 },
             { "Aspirational", 7038 },
             { "Ajr NeoTheater", 171573 },
@@ -49,14 +54,14 @@ namespace BeatSaberUnzipper
             FileManager.ClearPlaylistsCache();
             FileManager.ClearImagesCache();
             
-            await GenerateBsPlaylistsFromSpotify(mapRequestManager);
+            //await GenerateBsPlaylistsFromSpotify(mapRequestManager);
             DownloadBeatSaverUserPlaylists(mapRequestManager);
             DownloadBeatSaverPlaylists(mapRequestManager);
             DownloadWebPlaylists(mapRequestManager);
 
             Stopwatch timer = Stopwatch.StartNew();
 
-            while (timer.Elapsed.TotalSeconds < 10 && (mapRequestManager.mapDataLeftToDownload >0 || mapRequestManager.zipFilesLeftToDownload > 0))
+            while (timer.Elapsed.TotalSeconds < 25 && (mapRequestManager.mapDataLeftToDownload >0 || mapRequestManager.zipFilesLeftToDownload > 0))
             {
                 Console.WriteLine($"Waiting for {mapRequestManager.mapDataLeftToDownload} map data requests and {mapRequestManager.zipFilesLeftToDownload} zip file requests");
                 Thread.Sleep(750);

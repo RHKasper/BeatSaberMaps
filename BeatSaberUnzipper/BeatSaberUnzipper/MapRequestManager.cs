@@ -56,7 +56,7 @@ namespace BeatSaberUnzipper
 		/// a download request for the given song and call <see cref="OnMapDownloadFinished"/> when it completes.
 		/// </summary>
 		/// <param name="mapData">The map being requested</param>
-		public void RequestMapAsync(MapData mapData)
+		private void RequestMapAsync(MapData mapData)
 		{
 			string mapDirectory = FileManager.GetMapDirectory(mapData);
 			string zipFilePath = FileManager.GetZipFilePath(mapData);
